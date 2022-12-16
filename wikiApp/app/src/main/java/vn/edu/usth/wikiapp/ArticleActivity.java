@@ -173,6 +173,34 @@ public class ArticleActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onPause() {
+        // Always call the superclass method first
+        super.onPause();
+        Log.i("Weather Activity","onPause() finished");
+    }
+
+    @Override
+    public void onResume() {
+        // Always call the superclass method first
+        super.onResume();
+        Log.i("Weather Activity","onResume() finished");
+    }
+
+    @Override
+    public void onStop() {
+        // Always call the superclass method first
+        super.onStop();
+        Log.i("Weather Activity","onStop() finished");
+    }
+
+    @Override
+    public void onDestroy() {
+        // Always call the superclass method first
+        super.onDestroy();
+        Log.i("Weather Activity","onDestroy() finished");
+    }
+
     public void onCustomToggleClick(View view) {
         Toast.makeText(this, "CustomToggle", Toast.LENGTH_SHORT).show();
     }
@@ -180,5 +208,16 @@ public class ArticleActivity extends AppCompatActivity {
     public void onClickSearch(View view) {
         Toast.makeText(this, "Search custom", Toast.LENGTH_SHORT).show();
     }
+
+
+
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 
 }

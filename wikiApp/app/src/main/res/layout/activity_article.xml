@@ -188,6 +188,7 @@
 
         android:background="@color/colorPrimary"
         app:itemTextColor="@color/textColor"
+        android:paddingTop="56dp"
 
         >
 

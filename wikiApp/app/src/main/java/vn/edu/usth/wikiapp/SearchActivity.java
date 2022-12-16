@@ -124,6 +124,26 @@ public class SearchActivity extends AppCompatActivity {
         SearchResultArrayList.add(new SearchResult("C++", "C++ Self Paced Course"));
         SearchResultArrayList.add(new SearchResult("Python", "Python Self Paced Course"));
         SearchResultArrayList.add(new SearchResult("Fork CPP", "Fork CPP Self Paced Course"));
+        SearchResultArrayList.add(new SearchResult("SDFSDFDFSSA", "DSA Self Paced Course"));
+        SearchResultArrayList.add(new SearchResult("JAVA", "JAVA Self Paced Course"));
+        SearchResultArrayList.add(new SearchResult("C++", "C++ Self Paced Course"));
+        SearchResultArrayList.add(new SearchResult("Python", "Python Self Paced Course"));
+        SearchResultArrayList.add(new SearchResult("Fork CPP", "Fork CPP Self Paced Course"));
+        SearchResultArrayList.add(new SearchResult("DGAFDGSA", "DSA Self Paced Course"));
+        SearchResultArrayList.add(new SearchResult("JAVA", "JAVA Self Paced Course"));
+        SearchResultArrayList.add(new SearchResult("C++", "C++ Self Paced Course"));
+        SearchResultArrayList.add(new SearchResult("Python", "Python Self Paced Course"));
+        SearchResultArrayList.add(new SearchResult("Fork CPP", "Fork CPP Self Paced Course"));
+        SearchResultArrayList.add(new SearchResult("DSAASDFASDF", "DSA Self Paced Course"));
+        SearchResultArrayList.add(new SearchResult("JAVA", "JAVA Self Paced Course"));
+        SearchResultArrayList.add(new SearchResult("C++", "C++ Self Paced Course"));
+        SearchResultArrayList.add(new SearchResult("Python", "Python Self Paced Course"));
+        SearchResultArrayList.add(new SearchResult("Fork CPP", "Fork CPP Self Paced Course"));
+        SearchResultArrayList.add(new SearchResult("DSA", "DSA Self Paced Course"));
+        SearchResultArrayList.add(new SearchResult("JAVA", "JAVA Self Paced Course"));
+        SearchResultArrayList.add(new SearchResult("C++", "C++ Self Paced Course"));
+        SearchResultArrayList.add(new SearchResult("Python", "Python Self Paced Course"));
+        SearchResultArrayList.add(new SearchResult("Fork CPP", "Fork CPP Self Paced Course"));
 
         // initializing our adapter class.
         adapter = new SearchResultAdapter(SearchResultArrayList, SearchActivity.this);
