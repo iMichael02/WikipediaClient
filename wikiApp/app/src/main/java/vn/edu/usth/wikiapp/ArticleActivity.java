@@ -42,8 +42,6 @@ public class ArticleActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_article);
-        SharedPreferences sharedPreferences = null;
-
 
         recyclerView = findViewById(R.id.recyclerView);
         toolbar = findViewById(R.id.toolbarCustom);
@@ -66,6 +64,17 @@ public class ArticleActivity extends AppCompatActivity {
             }
         });
 
+
+//        SharedPreferences sharedPreferences = null;
+//        sharedPreferences = getSharedPreferences( "night", 0);
+//        Boolean booleanValue = sharedPreferences.getBoolean("night_mode", true);
+//        if(booleanValue) {
+//            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+//            switchCompat.setChecked(true);
+//        }
+
+
+//        switchCompat = findViewById(R.id.SwitchCompatMain);
 
 
 //        sharedPreferences = getSharedPreferences( "night", 0);
@@ -94,7 +103,6 @@ public class ArticleActivity extends AppCompatActivity {
 //                }
 //            }
 //        });
-
         initData();
         setRecyclerView();
 
@@ -118,8 +126,9 @@ public class ArticleActivity extends AppCompatActivity {
     }
 
     public void openMain() {
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
+//        Intent intent = new Intent(this, MainActivity.class);
+//        startActivity(intent);
+        finish();
     }
 
 

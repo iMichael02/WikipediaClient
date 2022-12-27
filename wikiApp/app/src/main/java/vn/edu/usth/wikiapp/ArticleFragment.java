@@ -1,7 +1,10 @@
 package vn.edu.usth.wikiapp;
 
+import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
@@ -26,6 +29,11 @@ public class ArticleFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+
+    private RecyclerView recyclerView;
+    private ArticleFragmentAdapter adapter;
+    private ArrayList<SearchResult> SearchResultArrayList;
+
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -61,6 +69,7 @@ public class ArticleFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
     }
 
 
@@ -68,6 +77,60 @@ public class ArticleFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_article, container, false);
+        View view = inflater.inflate(R.layout.fragment_article, container, false);
+        return view;
     }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        dataInit();
+        recyclerView = view.findViewById(R.id.recyclerViewHome);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        // initializing our adapter class.
+        ArticleFragmentAdapter articleFragmentAdapter = new ArticleFragmentAdapter(getContext(),SearchResultArrayList);
+
+        // adding layout manager to our recycler view.
+        // setting adapter to
+        // our recycler view.
+        recyclerView.setAdapter(articleFragmentAdapter);
+        articleFragmentAdapter.notifyDataSetChanged();
+    }
+
+    private void dataInit() {
+
+        // below line we are creating a new array list
+        SearchResultArrayList = new ArrayList<SearchResult>();
+
+        // below line is to add data to our array list.
+        SearchResultArrayList.add(new SearchResult("DSA", "DSA Self Paced Course"));
+        SearchResultArrayList.add(new SearchResult("JAVA", "JAVA Self Paced Course"));
+        SearchResultArrayList.add(new SearchResult("C++", "C++ Self Paced Course"));
+        SearchResultArrayList.add(new SearchResult("Python", "Python Self Paced Course"));
+        SearchResultArrayList.add(new SearchResult("Fork CPP", "Fork CPP Self Paced Course"));
+        SearchResultArrayList.add(new SearchResult("SDFSDFDFSSA", "DSA Self Paced Course"));
+        SearchResultArrayList.add(new SearchResult("JAVA", "JAVA Self Paced Course"));
+        SearchResultArrayList.add(new SearchResult("C++", "C++ Self Paced Course"));
+        SearchResultArrayList.add(new SearchResult("Python", "Python Self Paced Course"));
+        SearchResultArrayList.add(new SearchResult("Fork CPP", "Fork CPP Self Paced Course"));
+        SearchResultArrayList.add(new SearchResult("DGAFDGSA", "DSA Self Paced Course"));
+        SearchResultArrayList.add(new SearchResult("JAVA", "JAVA Self Paced Course"));
+        SearchResultArrayList.add(new SearchResult("C++", "C++ Self Paced Course"));
+        SearchResultArrayList.add(new SearchResult("Python", "Python Self Paced Course"));
+        SearchResultArrayList.add(new SearchResult("Fork CPP", "Fork CPP Self Paced Course"));
+        SearchResultArrayList.add(new SearchResult("DSAASDFASDF", "DSA Self Paced Course"));
+        SearchResultArrayList.add(new SearchResult("JAVA", "JAVA Self Paced Course"));
+        SearchResultArrayList.add(new SearchResult("C++", "C++ Self Paced Course"));
+        SearchResultArrayList.add(new SearchResult("Python", "Python Self Paced Course"));
+        SearchResultArrayList.add(new SearchResult("Fork CPP", "Fork CPP Self Paced Course"));
+        SearchResultArrayList.add(new SearchResult("DSA", "DSA Self Paced Course"));
+        SearchResultArrayList.add(new SearchResult("JAVA", "JAVA Self Paced Course"));
+        SearchResultArrayList.add(new SearchResult("C++", "C++ Self Paced Course"));
+        SearchResultArrayList.add(new SearchResult("Python", "Python Self Paced Course"));
+        SearchResultArrayList.add(new SearchResult("Fork CPP", "Fork CPP Self Paced Course"));
+
+    }
+
+
 }

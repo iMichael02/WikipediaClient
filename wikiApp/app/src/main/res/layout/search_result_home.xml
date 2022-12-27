@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:elevation="8dp"
+    >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        >
+
+        <!-- text view for our course name -->
+        <TextView
+            android:id="@+id/searchTitleHome"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:text="Title"
+            android:textColor="@color/textColor"
+            android:textSize="18sp" />
+
+        <!-- text view for our course description -->
+        <TextView
+            android:id="@+id/searchSubDescHome"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/searchTitleHome"
+            android:padding="12dp"
+            android:text="Sub description"
+            android:textColor="@color/textColor" />
+        <View
+            android:layout_below = "@id/searchSubDescHome"
+            style = "@style/Divider"></View>
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>

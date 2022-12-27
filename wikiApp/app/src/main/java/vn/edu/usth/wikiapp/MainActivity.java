@@ -8,17 +8,24 @@ import androidx.appcompat.widget.SwitchCompat;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.CompoundButton;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
@@ -32,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager2 mViewPager2;
     private BottomNavigationView mBottomNavigationView;
     SwitchCompat switchCompat;
+    LinearLayout settings;
 
 
 
@@ -47,41 +55,17 @@ public class MainActivity extends AppCompatActivity {
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setHomeAsUpIndicator(R.drawable.ic_menu);
 
-
         SharedPreferences sharedPreferences = null;
 
-        switchCompat = findViewById(R.id.SwitchCompatMain);
-
-
         sharedPreferences = getSharedPreferences( "night", 0);
+
         Boolean booleanValue = sharedPreferences.getBoolean("night_mode", true);
         if(booleanValue) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-            switchCompat.setChecked(true);
         }
 
-        SharedPreferences finalSharedPreferences = sharedPreferences;
-        switchCompat.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                if (isChecked) {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                    switchCompat.setChecked(true);
-                    SharedPreferences.Editor editor = finalSharedPreferences.edit();
-                    editor.putBoolean("night_mode",true);
-                    editor.commit();
-                } else {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                    switchCompat.setChecked(false);
-                    SharedPreferences.Editor editor = finalSharedPreferences.edit();
-                    editor.putBoolean("night_mode",false);
-                    editor.commit();
-                }
-            }
-        });
-
-
-        mDrawerLayout = findViewById(R.id.drawer_layout);
+        mDrawerLayout = findViewById(R.id.drawer_layout_main);
+        settings = findViewById(R.id.settings_home);
         mViewPager2 = findViewById(R.id.view_pager);
         mBottomNavigationView = findViewById(R.id.bottom_navigation);
         ViewPagerAdapter adapter = new ViewPagerAdapter(this);
@@ -120,6 +104,19 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
+        settings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openSettings();
+            }
+        });
+//        replaceFragment(new ArticleFragment());
+
+    }
+
+    public void openSettings() {
+        Intent intent = new Intent(this, SettingsActivity.class);
+        startActivity(intent);
     }
 
     @Override
@@ -130,5 +127,13 @@ public class MainActivity extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void replaceFragment(Fragment fragment) {
+        FragmentManager fragmentManager  = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.content_layout, fragment);
+        fragmentTransaction.commit();
+
     }
 }
