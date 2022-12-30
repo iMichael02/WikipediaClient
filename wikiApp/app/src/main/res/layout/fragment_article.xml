@@ -6,20 +6,39 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ArticleFragment"
-    android:background="@color/colorPrimary"
+    android:background="@color/white"
     android:id="@+id/my_drawer_layout"
     tools:ignore="HardcodedText"
     >
 
-    <androidx.recyclerview.widget.RecyclerView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id = "@+id/recyclerViewHome"
+        android:orientation="vertical"
         android:layout_marginTop="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
         >
+        <androidx.appcompat.widget.SearchView
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:tooltipText="Search here"
+            app:theme="@style/SearchViewStyle"
+            app:iconifiedByDefault="false"
+            android:id="@+id/searchViewHome"
+            >
+
+        </androidx.appcompat.widget.SearchView>
+        <View style = "@style/Divider"></View>
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id = "@+id/recyclerViewHome"
+            >
 
 
-    </androidx.recyclerview.widget.RecyclerView>
+        </androidx.recyclerview.widget.RecyclerView>
+    </LinearLayout>
+
 
 
     <com.google.android.material.navigation.NavigationView

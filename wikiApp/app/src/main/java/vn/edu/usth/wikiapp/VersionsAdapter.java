@@ -1,5 +1,6 @@
 package vn.edu.usth.wikiapp;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,7 +39,6 @@ public class VersionsAdapter extends RecyclerView.Adapter<VersionsAdapter.Versio
         boolean isExpandable = versionsList.get(position).isExpandable();
         holder.expandable_layout.setVisibility(isExpandable ? View.VISIBLE : View.GONE);
         holder.imgView.setImageResource(isExpandable ? R.drawable.ic_up : R.drawable.ic_down);
-
     }
 
     @Override

@@ -5,35 +5,82 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:elevation="8dp"
+    android:id="@+id/cardViewHome"
     >
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
+        android:orientation="vertical"
+
         >
-
-        <!-- text view for our course name -->
-        <TextView
-            android:id="@+id/searchTitleHome"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="8dp"
-            android:text="Title"
-            android:textColor="@color/textColor"
-            android:textSize="18sp" />
+            android:layout_height="80dp"
+            android:background="@color/colorPrimary"
+            android:orientation="horizontal"
 
-        <!-- text view for our course description -->
-        <TextView
-            android:id="@+id/searchSubDescHome"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/searchTitleHome"
-            android:padding="12dp"
-            android:text="Sub description"
-            android:textColor="@color/textColor" />
+            >
+
+            <!-- text view for our course name -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/textBox"
+                android:orientation="vertical"
+                android:layout_weight="3"
+                >
+                <TextView
+                    android:id="@+id/searchTitleHome"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    android:text="Title"
+                    android:textColor="@color/textColor"
+                    android:textSize="18sp" />
+
+                <!-- text view for our course description -->
+                <TextView
+                    android:id="@+id/searchSubDescHome"
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:paddingRight="8dp"
+                    android:paddingLeft="8dp"
+                    android:gravity="center"
+                    android:layout_below="@id/searchTitleHome"
+                    android:text="Sub description"
+                    android:textColor="@color/textColor" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="invisible"
+                    android:id="@+id/idHome"
+                    >
+
+                </TextView>
+            </LinearLayout>
+            <LinearLayout
+                android:padding="8dp"
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                >
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/fork"
+                    >
+
+                </ImageView>
+            </LinearLayout>
+
+
+        </LinearLayout>
+
         <View
-            android:layout_below = "@id/searchSubDescHome"
+            android:layout_below = "@id/textBox"
             style = "@style/Divider"></View>
-    </RelativeLayout>
+    </LinearLayout>
 </androidx.cardview.widget.CardView>

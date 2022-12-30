@@ -11,7 +11,11 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -31,8 +35,9 @@ public class ArticleFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
 
     private RecyclerView recyclerView;
-    private ArticleFragmentAdapter adapter;
+    private ArticleFragmentAdapter articleFragmentAdapter;
     private ArrayList<SearchResult> SearchResultArrayList;
+    SearchView searchView;
 
 
     // TODO: Rename and change types of parameters
@@ -62,6 +67,8 @@ public class ArticleFragment extends Fragment {
         return fragment;
     }
 
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,9 +76,38 @@ public class ArticleFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
     }
 
+    private void filter(String text, ArticleFragmentAdapter adapter) {
+        // creating a new array list to filter our data.
+        ArrayList<SearchResult> filteredlist = new ArrayList<SearchResult>();
+//
+//        // running a for loop to compare elements.
+        for (SearchResult item : SearchResultArrayList) {
+            // checking if the entered string matched with any item of our recycler view.
+            if (item.getTitle().toLowerCase().contains(text.toLowerCase())) {
+                // if the item is matched we are
+                // adding it to our filtered list.
+                filteredlist.add(item);
+
+            }
+        }
+        if (filteredlist.isEmpty()) {
+            // if no item is added in filtered list we are
+            // displaying a toast message as no data found.
+            Toast.makeText(getContext(), "No Data Found..", Toast.LENGTH_SHORT).show();
+        }
+        else {
+
+            // at last we are passing that filtered
+            // list to our adapter class.
+            adapter.filterList(filteredlist);
+//            Toast.makeText(getContext(), "No Data Found..", Toast.LENGTH_SHORT).show();
+//            adapter.filterList(filteredlist);
+
+        }
+
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -85,6 +121,9 @@ public class ArticleFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         dataInit();
+
+
+
         recyclerView = view.findViewById(R.id.recyclerViewHome);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
@@ -95,7 +134,42 @@ public class ArticleFragment extends Fragment {
         // setting adapter to
         // our recycler view.
         recyclerView.setAdapter(articleFragmentAdapter);
+        recyclerView.addOnItemTouchListener(
+                new RecyclerView.OnItemTouchListener() {
+                    @Override
+                    public boolean onInterceptTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
+                        return false;
+                    }
+
+                    @Override
+                    public void onTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
+
+                    }
+
+                    @Override
+                    public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+
+                    }
+                }
+        );
+
         articleFragmentAdapter.notifyDataSetChanged();
+
+        searchView = view.findViewById(R.id.searchViewHome);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                // inside on query text change method we are
+                // calling a method to filter our recycler view.
+                filter(newText, articleFragmentAdapter);
+                return false;
+            }
+        });
     }
 
     private void dataInit() {
@@ -104,33 +178,32 @@ public class ArticleFragment extends Fragment {
         SearchResultArrayList = new ArrayList<SearchResult>();
 
         // below line is to add data to our array list.
-        SearchResultArrayList.add(new SearchResult("DSA", "DSA Self Paced Course"));
-        SearchResultArrayList.add(new SearchResult("JAVA", "JAVA Self Paced Course"));
-        SearchResultArrayList.add(new SearchResult("C++", "C++ Self Paced Course"));
-        SearchResultArrayList.add(new SearchResult("Python", "Python Self Paced Course"));
-        SearchResultArrayList.add(new SearchResult("Fork CPP", "Fork CPP Self Paced Course"));
-        SearchResultArrayList.add(new SearchResult("SDFSDFDFSSA", "DSA Self Paced Course"));
-        SearchResultArrayList.add(new SearchResult("JAVA", "JAVA Self Paced Course"));
-        SearchResultArrayList.add(new SearchResult("C++", "C++ Self Paced Course"));
-        SearchResultArrayList.add(new SearchResult("Python", "Python Self Paced Course"));
-        SearchResultArrayList.add(new SearchResult("Fork CPP", "Fork CPP Self Paced Course"));
-        SearchResultArrayList.add(new SearchResult("DGAFDGSA", "DSA Self Paced Course"));
-        SearchResultArrayList.add(new SearchResult("JAVA", "JAVA Self Paced Course"));
-        SearchResultArrayList.add(new SearchResult("C++", "C++ Self Paced Course"));
-        SearchResultArrayList.add(new SearchResult("Python", "Python Self Paced Course"));
-        SearchResultArrayList.add(new SearchResult("Fork CPP", "Fork CPP Self Paced Course"));
-        SearchResultArrayList.add(new SearchResult("DSAASDFASDF", "DSA Self Paced Course"));
-        SearchResultArrayList.add(new SearchResult("JAVA", "JAVA Self Paced Course"));
-        SearchResultArrayList.add(new SearchResult("C++", "C++ Self Paced Course"));
-        SearchResultArrayList.add(new SearchResult("Python", "Python Self Paced Course"));
-        SearchResultArrayList.add(new SearchResult("Fork CPP", "Fork CPP Self Paced Course"));
-        SearchResultArrayList.add(new SearchResult("DSA", "DSA Self Paced Course"));
-        SearchResultArrayList.add(new SearchResult("JAVA", "JAVA Self Paced Course"));
-        SearchResultArrayList.add(new SearchResult("C++", "C++ Self Paced Course"));
-        SearchResultArrayList.add(new SearchResult("Python", "Python Self Paced Course"));
-        SearchResultArrayList.add(new SearchResult("Fork CPP", "Fork CPP Self Paced Course"));
+        SearchResultArrayList.add(new SearchResult("DSA", "DSA Self Paced Course", "1"));
+        SearchResultArrayList.add(new SearchResult("JAVA", "JAVA Self Paced Course", "2"));
+        SearchResultArrayList.add(new SearchResult("C++", "C++ Self Paced Course", "3"));
+        SearchResultArrayList.add(new SearchResult("Python", "Python Self Paced Course", "4"));
+        SearchResultArrayList.add(new SearchResult("Fork CPP", "Fork CPP Self Paced Course", "5"));
+        SearchResultArrayList.add(new SearchResult("SDFSDFDFSSA", "DSA Self Paced Course", "6"));
+        SearchResultArrayList.add(new SearchResult("JAVA", "JAVA Self Paced Course", "7"));
+        SearchResultArrayList.add(new SearchResult("C++", "C++ Self Paced Course", "8"));
+        SearchResultArrayList.add(new SearchResult("Python", "Python Self Paced Course", "9"));
+        SearchResultArrayList.add(new SearchResult("Fork CPP", "Fork CPP Self Paced Course", "10"));
+        SearchResultArrayList.add(new SearchResult("DGAFDGSA", "DSA Self Paced Course", "11"));
+        SearchResultArrayList.add(new SearchResult("JAVA", "JAVA Self Paced Course", "12"));
+        SearchResultArrayList.add(new SearchResult("C++", "C++ Self Paced Course", "13"));
+        SearchResultArrayList.add(new SearchResult("Python", "Python Self Paced Course", "14"));
+        SearchResultArrayList.add(new SearchResult("Fork CPP", "Fork CPP Self Paced Course", "15"));
+        SearchResultArrayList.add(new SearchResult("DSAASDFASDF", "DSA Self Paced Course", "16"));
+        SearchResultArrayList.add(new SearchResult("JAVA", "JAVA Self Paced Course", "17"));
+        SearchResultArrayList.add(new SearchResult("C++", "C++ Self Paced Course", "18"));
+        SearchResultArrayList.add(new SearchResult("Python", "Python Self Paced Course", "19"));
+        SearchResultArrayList.add(new SearchResult("Fork CPP", "Fork CPP Self Paced Course", "20"));
+        SearchResultArrayList.add(new SearchResult("DSA", "DSA Self Paced Course", "21"));
+        SearchResultArrayList.add(new SearchResult("JAVA", "JAVA Self Paced Course", "23"));
+        SearchResultArrayList.add(new SearchResult("C++", "C++ Self Paced Course", "24"));
+        SearchResultArrayList.add(new SearchResult("Python", "Python Self Paced Course", "25"));
+        SearchResultArrayList.add(new SearchResult("Fork CPP", "Fork CPP Self Paced Course", "26"));
 
     }
-
 
 }

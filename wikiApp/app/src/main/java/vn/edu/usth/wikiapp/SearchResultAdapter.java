@@ -1,10 +1,13 @@
 package vn.edu.usth.wikiapp;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -44,6 +47,15 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
         SearchResult model = SearchResultArrayList.get(position);
         holder.searchTitleTV.setText(model.getTitle());
         holder.searchSubDescTV.setText(model.getSubDesc());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(view.getContext(), "Recycle Click" + holder.getAdapterPosition(), Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(view.getContext(), ArticleActivity.class);
+                view.getContext().startActivity(intent);
+            }
+        });
+
     }
 
     @Override

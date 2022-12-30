@@ -35,6 +35,7 @@ public class ArticleActivity extends AppCompatActivity {
     SwitchCompat switchCompat;
     TextView search;
     TextView button;
+    TextView receiver_msg;
 
 
 
@@ -65,44 +66,6 @@ public class ArticleActivity extends AppCompatActivity {
         });
 
 
-//        SharedPreferences sharedPreferences = null;
-//        sharedPreferences = getSharedPreferences( "night", 0);
-//        Boolean booleanValue = sharedPreferences.getBoolean("night_mode", true);
-//        if(booleanValue) {
-//            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-//            switchCompat.setChecked(true);
-//        }
-
-
-//        switchCompat = findViewById(R.id.SwitchCompatMain);
-
-
-//        sharedPreferences = getSharedPreferences( "night", 0);
-//        Boolean booleanValue = sharedPreferences.getBoolean("night_mode", true);
-//        if(booleanValue) {
-//            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-//            switchCompat.setChecked(true);
-//        }
-//
-//        SharedPreferences finalSharedPreferences = sharedPreferences;
-//        switchCompat.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-//                if (isChecked) {
-//                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-//                    switchCompat.setChecked(true);
-//                    SharedPreferences.Editor editor = finalSharedPreferences.edit();
-//                    editor.putBoolean("night_mode",true);
-//                    editor.commit();
-//                } else {
-//                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-//                    switchCompat.setChecked(false);
-//                    SharedPreferences.Editor editor = finalSharedPreferences.edit();
-//                    editor.putBoolean("night_mode",false);
-//                    editor.commit();
-//                }
-//            }
-//        });
         initData();
         setRecyclerView();
 
@@ -116,6 +79,10 @@ public class ArticleActivity extends AppCompatActivity {
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
 
+        Intent intent = getIntent();
+        String str = intent.getStringExtra("message_key");
+        Toast.makeText(this, "Message Key ID from previous activity" + str, Toast.LENGTH_SHORT).show();
+
         // to make the Navigation drawer icon always appear on the action bar
 //        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
@@ -128,6 +95,9 @@ public class ArticleActivity extends AppCompatActivity {
     public void openMain() {
 //        Intent intent = new Intent(this, MainActivity.class);
 //        startActivity(intent);
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
         finish();
     }
 
