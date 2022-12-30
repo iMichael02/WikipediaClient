@@ -108,7 +108,7 @@
             android:backgroundTint="@color/layoutMain"
             android:textColor="@color/textColor"
             android:gravity="center_horizontal|center_vertical"
-            android:text="Create your account"
+            android:text="Login"
             android:layout_gravity="center"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

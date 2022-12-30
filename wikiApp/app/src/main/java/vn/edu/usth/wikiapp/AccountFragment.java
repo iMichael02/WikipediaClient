@@ -70,7 +70,7 @@ public class AccountFragment extends Fragment {
     }
 
     public void opensignup() {
-        Intent intent = new Intent(getActivity(), activity_signup.class);
+        Intent intent = new Intent(getContext(), activity_signup.class);
         startActivity(intent);
     }
 }

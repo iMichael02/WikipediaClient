@@ -59,7 +59,7 @@
         <activity
             android:name=".activity_signup"
             android:exported="true"
-            android:theme="@style/Theme.WikiApp"
+            android:theme="@style/SearchTheme.WikiApp"
             >
             <intent-filter>
                 <action android:name="android.intent.action.DEFAULT" />
