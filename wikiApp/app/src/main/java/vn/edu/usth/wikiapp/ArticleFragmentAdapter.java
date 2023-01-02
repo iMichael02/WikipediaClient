@@ -2,16 +2,24 @@ package vn.edu.usth.wikiapp;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.media.Image;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 
 public class ArticleFragmentAdapter extends RecyclerView.Adapter<ArticleFragmentAdapter.RecyclerViewHolder> {
@@ -20,6 +28,7 @@ public class ArticleFragmentAdapter extends RecyclerView.Adapter<ArticleFragment
     private ArrayList<SearchResult> PastSearchResultArrayList;
     private ArrayList<SearchResult> SearchResultArrayList;
     private RecyclerView recyclerView;
+    private ImageLoadTask imageLoadTask;
 
 
     public ArticleFragmentAdapter(Context context, ArrayList<SearchResult> SearchResultArrayList) {
@@ -31,11 +40,13 @@ public class ArticleFragmentAdapter extends RecyclerView.Adapter<ArticleFragment
         TextView title;
         TextView desc;
         TextView id;
+        ImageView imageView;
         public RecyclerViewHolder(@NonNull View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.searchTitleHome);
             desc = itemView.findViewById(R.id.searchSubDescHome);
             id = itemView.findViewById(R.id.idHome);
+            imageView = itemView.findViewById(R.id.searchImg);
         }
 
     }
@@ -59,10 +70,11 @@ public class ArticleFragmentAdapter extends RecyclerView.Adapter<ArticleFragment
         SearchResult model = SearchResultArrayList.get(position);
         holder.title.setText(model.getTitle());
         holder.desc.setText(model.getSubDesc());
+        new ImageLoadTask(model.getImageSrc(), holder.imageView).execute();
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String id = model.getId();
+                String id = model.getTitle();
                 Intent intent = new Intent(context, ArticleActivity.class);
                 intent.putExtra("message_key", id);
 
@@ -73,6 +85,7 @@ public class ArticleFragmentAdapter extends RecyclerView.Adapter<ArticleFragment
 
 
     }
+
 
     @Override
     public int getItemCount() {

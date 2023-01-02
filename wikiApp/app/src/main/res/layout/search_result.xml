@@ -62,7 +62,7 @@
                     android:layout_height="match_parent"
                     android:layout_gravity="center_vertical"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/fork"
+                    android:id="@+id/searchImg"
                     >
 
                 </ImageView>

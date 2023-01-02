@@ -119,31 +119,31 @@ public class SearchActivity extends AppCompatActivity {
         SearchResultArrayList = new ArrayList<SearchResult>();
 
         // below line is to add data to our array list.
-        SearchResultArrayList.add(new SearchResult("DSA", "DSA Self Paced Course", "1"));
-        SearchResultArrayList.add(new SearchResult("JAVA", "JAVA Self Paced Course", "2"));
-        SearchResultArrayList.add(new SearchResult("C++", "C++ Self Paced Course", "3"));
-        SearchResultArrayList.add(new SearchResult("Python", "Python Self Paced Course", "4"));
-        SearchResultArrayList.add(new SearchResult("Fork CPP", "Fork CPP Self Paced Course", "5"));
-        SearchResultArrayList.add(new SearchResult("SDFSDFDFSSA", "DSA Self Paced Course", "6"));
-        SearchResultArrayList.add(new SearchResult("JAVA", "JAVA Self Paced Course", "7"));
-        SearchResultArrayList.add(new SearchResult("C++", "C++ Self Paced Course", "8"));
-        SearchResultArrayList.add(new SearchResult("Python", "Python Self Paced Course", "9"));
-        SearchResultArrayList.add(new SearchResult("Fork CPP", "Fork CPP Self Paced Course", "10"));
-        SearchResultArrayList.add(new SearchResult("DGAFDGSA", "DSA Self Paced Course", "11"));
-        SearchResultArrayList.add(new SearchResult("JAVA", "JAVA Self Paced Course", "12"));
-        SearchResultArrayList.add(new SearchResult("C++", "C++ Self Paced Course", "13"));
-        SearchResultArrayList.add(new SearchResult("Python", "Python Self Paced Course", "14"));
-        SearchResultArrayList.add(new SearchResult("Fork CPP", "Fork CPP Self Paced Course", "15"));
-        SearchResultArrayList.add(new SearchResult("DSAASDFASDF", "DSA Self Paced Course", "16"));
-        SearchResultArrayList.add(new SearchResult("JAVA", "JAVA Self Paced Course", "17"));
-        SearchResultArrayList.add(new SearchResult("C++", "C++ Self Paced Course", "18"));
-        SearchResultArrayList.add(new SearchResult("Python", "Python Self Paced Course", "19"));
-        SearchResultArrayList.add(new SearchResult("Fork CPP", "Fork CPP Self Paced Course", "20"));
-        SearchResultArrayList.add(new SearchResult("DSA", "DSA Self Paced Course", "21"));
-        SearchResultArrayList.add(new SearchResult("JAVA", "JAVA Self Paced Course", "23"));
-        SearchResultArrayList.add(new SearchResult("C++", "C++ Self Paced Course", "24"));
-        SearchResultArrayList.add(new SearchResult("Python", "Python Self Paced Course", "25"));
-        SearchResultArrayList.add(new SearchResult("Fork CPP", "Fork CPP Self Paced Course", "26"));
+//        SearchResultArrayList.add(new SearchResult("DSA", "DSA Self Paced Course", "1"));
+//        SearchResultArrayList.add(new SearchResult("JAVA", "JAVA Self Paced Course", "2"));
+//        SearchResultArrayList.add(new SearchResult("C++", "C++ Self Paced Course", "3"));
+//        SearchResultArrayList.add(new SearchResult("Python", "Python Self Paced Course", "4"));
+//        SearchResultArrayList.add(new SearchResult("Fork CPP", "Fork CPP Self Paced Course", "5"));
+//        SearchResultArrayList.add(new SearchResult("SDFSDFDFSSA", "DSA Self Paced Course", "6"));
+//        SearchResultArrayList.add(new SearchResult("JAVA", "JAVA Self Paced Course", "7"));
+//        SearchResultArrayList.add(new SearchResult("C++", "C++ Self Paced Course", "8"));
+//        SearchResultArrayList.add(new SearchResult("Python", "Python Self Paced Course", "9"));
+//        SearchResultArrayList.add(new SearchResult("Fork CPP", "Fork CPP Self Paced Course", "10"));
+//        SearchResultArrayList.add(new SearchResult("DGAFDGSA", "DSA Self Paced Course", "11"));
+//        SearchResultArrayList.add(new SearchResult("JAVA", "JAVA Self Paced Course", "12"));
+//        SearchResultArrayList.add(new SearchResult("C++", "C++ Self Paced Course", "13"));
+//        SearchResultArrayList.add(new SearchResult("Python", "Python Self Paced Course", "14"));
+//        SearchResultArrayList.add(new SearchResult("Fork CPP", "Fork CPP Self Paced Course", "15"));
+//        SearchResultArrayList.add(new SearchResult("DSAASDFASDF", "DSA Self Paced Course", "16"));
+//        SearchResultArrayList.add(new SearchResult("JAVA", "JAVA Self Paced Course", "17"));
+//        SearchResultArrayList.add(new SearchResult("C++", "C++ Self Paced Course", "18"));
+//        SearchResultArrayList.add(new SearchResult("Python", "Python Self Paced Course", "19"));
+//        SearchResultArrayList.add(new SearchResult("Fork CPP", "Fork CPP Self Paced Course", "20"));
+//        SearchResultArrayList.add(new SearchResult("DSA", "DSA Self Paced Course", "21"));
+//        SearchResultArrayList.add(new SearchResult("JAVA", "JAVA Self Paced Course", "23"));
+//        SearchResultArrayList.add(new SearchResult("C++", "C++ Self Paced Course", "24"));
+//        SearchResultArrayList.add(new SearchResult("Python", "Python Self Paced Course", "25"));
+//        SearchResultArrayList.add(new SearchResult("Fork CPP", "Fork CPP Self Paced Course", "26"));
 
         // initializing our adapter class.
         adapter = new SearchResultAdapter(SearchResultArrayList, SearchActivity.this);

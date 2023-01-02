@@ -1,5 +1,7 @@
 package vn.edu.usth.wikiapp;
 
+import static android.content.ContentValues.TAG;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,14 +23,29 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
 public class ArticleActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
-    List<Versions> versionsList;
+    ArrayList<Versions> versionsList;
     Toolbar toolbar;
     public DrawerLayout drawerLayout;
     public ActionBarDrawerToggle actionBarDrawerToggle;
@@ -36,6 +53,12 @@ public class ArticleActivity extends AppCompatActivity {
     TextView search;
     TextView button;
     TextView receiver_msg;
+    private RequestQueue mRequestQueue;
+    private StringRequest mStringRequest;
+    private StringRequest mBigRequest;
+    private JsonObjectRequest mJsonObjectRequest;
+    String otherUrl = "https://en.wikipedia.org/w/api.php?action=query&prop=revisions&rvprop=content&titles=pizza&format=json";
+
 
 
 
@@ -64,10 +87,13 @@ public class ArticleActivity extends AppCompatActivity {
                 openMain();
             }
         });
+        Intent intent = getIntent();
+        String str = intent.getStringExtra("message_key");
 
+        String url = "https://en.wikipedia.org/w/api.php?action=query&titles="+str+"&prop=extracts&explaintext&format=json";
 
-        initData();
-        setRecyclerView();
+        initData(url);
+
 
         // drawer layout instance to toggle the menu icon to open
 //        // drawer and back button to close drawer
@@ -79,8 +105,6 @@ public class ArticleActivity extends AppCompatActivity {
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
 
-        Intent intent = getIntent();
-        String str = intent.getStringExtra("message_key");
         Toast.makeText(this, "Message Key ID from previous activity" + str, Toast.LENGTH_SHORT).show();
 
         // to make the Navigation drawer icon always appear on the action bar
@@ -92,6 +116,8 @@ public class ArticleActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+
+
     public void openMain() {
 //        Intent intent = new Intent(this, MainActivity.class);
 //        startActivity(intent);
@@ -102,54 +128,69 @@ public class ArticleActivity extends AppCompatActivity {
     }
 
 
-    private void setRecyclerView() {
-        VersionsAdapter versionsAdapter = new VersionsAdapter(versionsList);
-        recyclerView.setAdapter(versionsAdapter);
-    }
+//    private void setRecyclerView() {
+//        initData();
+//    }
 
 
 
-    private void initData() {
+    private void initData(String url) {
+        versionsList = new ArrayList<Versions>();
 
-        versionsList = new ArrayList<>();
+        mRequestQueue = Volley.newRequestQueue(this);
 
-        versionsList.add(new Versions("Code name 1",  "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.\n" +
-                "\n"));
-        versionsList.add(new Versions("Code name 2",  "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.\n" +
-                "\n"));
-        versionsList.add(new Versions("Code name 3",  "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.\n" +
-                "\n"));
-        versionsList.add(new Versions("Code name 4",  "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.\n" +
-                "\n"));
-        versionsList.add(new Versions("Code name 5",  "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.\n" +
-                "\n"));
-        versionsList.add(new Versions("Code name 6",  "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.\n" +
-                "\n"));
-        versionsList.add(new Versions("Code name 7",  "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.\n" +
-                "\n"));
-        versionsList.add(new Versions("Code name 8",  "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.\n" +
-                "\n"));
-        versionsList.add(new Versions("Code name 9",  "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.\n" +
-                "\n"));
-        versionsList.add(new Versions("Code name 10",  "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.\n" +
-                "\n"));
-        versionsList.add(new Versions("Code name 11",  "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.\n" +
-                "\n"));
-        versionsList.add(new Versions("Code name 12",  "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.\n" +
-                "\n"));
+        mStringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    JSONObject queryObject = jsonObject.getJSONObject("query");
+                    JSONObject pageObject = queryObject.getJSONObject("pages");
+                    int pageNo = Integer.parseInt(pageObject.names().getString(0));
+                    JSONObject extractedObject = pageObject.getJSONObject(String.valueOf(pageNo));
+                    String Text = extractedObject.getString("extract");
+                    String[] TextArray = Text.replaceAll("\n","~").replaceAll("\t","~").split("(?=((?<!=)[=]{2}\\s*[a-zA-Z0-9\\s]*\\s[=]{2}))");
 
-        versionsList.add(new Versions("Code name 13",  "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.\n" +
-                "\n"));
-        versionsList.add(new Versions("Code name 14",  "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.\n" +
-                "\n"));
+                    List<String> list = new ArrayList<String>(Arrays.asList(TextArray));
+                    for(int i = TextArray.length -1 ; i >0;  i--) {
+                        if(list.get(i).replaceAll("\n","").replaceAll("\\s+", "").replaceAll("=","").length() < 30) {
+                            list.remove(i);
+                        }
+                    }
 
-        versionsList.add(new Versions("Code name 15",  "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.\n" +
-                "\n"));
-        versionsList.add(new Versions("Code name 16",  "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.\n" +
-                "\n"));
+                    ArrayList<String[]> contentArr = new ArrayList<>();
+                    for(int i = 0; i < list.size(); i++) {
+                        if(i == 0 ) {
+                            contentArr.add(new String[]{"Description", String.valueOf(list.get(i)).replaceAll("~","")});
+                        }
+                        else {
+                            String[] temp = list.get(i).split("(?<=([=]{2}\\s[a-zA-Z0-9\\s]{0,200}\\s[=]{2}))");
+                            contentArr.add(new String[] {temp[0].replaceAll("== ","").replaceAll(" ==",""), temp[1].replaceAll("~","")});
+                        }
 
+                    }
 
+                    for(int i = 0; i < contentArr.size(); i++) {
+                        versionsList.add(new Versions(contentArr.get(i)[0],contentArr.get(i)[1]));
 
+                    }
+
+                    VersionsAdapter versionsAdapter = new VersionsAdapter(getApplicationContext(),versionsList);
+                    recyclerView.setAdapter(versionsAdapter);
+                    versionsAdapter.notifyDataSetChanged();
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.i(TAG, "ERRORERRORERROR :" + error.toString());
+            }
+        });
+
+        mRequestQueue.add(mStringRequest);
     }
 
     @Override

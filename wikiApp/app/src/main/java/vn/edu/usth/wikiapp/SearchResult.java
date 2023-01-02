@@ -1,14 +1,26 @@
 package vn.edu.usth.wikiapp;
 
+import android.widget.ImageView;
+
 public class SearchResult {
     private String title;
     private String id;
     private String subDesc;
+    private String imageSrc;
 
-    public SearchResult(String title, String subDesc, String id) {
+    public SearchResult(String title, String subDesc, String id, String imageSrc) {
         this.title = title;
         this.subDesc = subDesc;
         this.id = id;
+        this.imageSrc = imageSrc;
+    }
+
+    public String getImageSrc() {
+        return imageSrc;
+    }
+
+    public void setImageSrc(String imageSrc) {
+        this.imageSrc = imageSrc;
     }
 
     public String getTitle() {

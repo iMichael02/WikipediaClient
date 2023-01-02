@@ -1,5 +1,7 @@
 package vn.edu.usth.wikiapp;
 
+import android.widget.ImageView;
+
 public class Versions {
 
     private String codeName, description;
@@ -19,6 +21,7 @@ public class Versions {
         this.description = description;
         this.expandable=false;
     }
+
 
     public String getCodeName() {
         return codeName;

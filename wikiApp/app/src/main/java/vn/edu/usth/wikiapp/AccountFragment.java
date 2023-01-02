@@ -62,7 +62,6 @@ public class AccountFragment extends Fragment {
         signup_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 opensignup();
             }
         });

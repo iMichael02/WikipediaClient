@@ -1,5 +1,6 @@
 package vn.edu.usth.wikiapp;
 
+import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,13 +14,17 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class VersionsAdapter extends RecyclerView.Adapter<VersionsAdapter.VersionVH> {
 
-    List<Versions> versionsList;
+    ArrayList<Versions> versionsList;
+    private Context context;
 
-    public VersionsAdapter(List<Versions> versionsList) {
+
+    public VersionsAdapter(Context context, ArrayList<Versions> versionsList) {
+        this.context = context;
         this.versionsList = versionsList;
     }
 

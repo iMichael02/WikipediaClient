@@ -18,7 +18,9 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,11 +28,27 @@ import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+import static android.content.ContentValues.TAG;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
+import com.google.gson.JsonObject;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.jsoup.Jsoup;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -40,6 +58,13 @@ public class MainActivity extends AppCompatActivity {
     private BottomNavigationView mBottomNavigationView;
     SwitchCompat switchCompat;
     LinearLayout settings;
+    private RequestQueue mRequestQueue;
+    private StringRequest mStringRequest;
+    private StringRequest mBigRequest;
+    private JsonObjectRequest mJsonObjectRequest;
+    private String url = "https://en.wikipedia.org/w/api.php?action=query&titles=pizza&prop=extracts&explaintext&format=json";
+    String otherUrl = "https://en.wikipedia.org/w/api.php?action=query&prop=revisions&rvprop=content&titles=pizza&format=json";
+
 
 
 
@@ -111,8 +136,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 //        replaceFragment(new ArticleFragment());
-
+        getData();
     }
+
 
     public void openSettings() {
         Intent intent = new Intent(this, SettingsActivity.class);
@@ -129,6 +155,57 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    private void getData() {
+        mRequestQueue = Volley.newRequestQueue(this);
+
+        mStringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    JSONObject queryObject = jsonObject.getJSONObject("query");
+                    JSONObject pageObject = queryObject.getJSONObject("pages");
+                    int pageNo = Integer.parseInt(pageObject.names().getString(0));
+                    JSONObject extractedObject = pageObject.getJSONObject(String.valueOf(pageNo));
+                    String Text = extractedObject.getString("extract");
+                    String[] TextArray = Text.replaceAll("\n","~").replaceAll("\t","~").split("(?=((?<!=)[=]{2}\\s*[a-zA-Z0-9\\s]*\\s[=]{2}))");
+
+                    List<String> list = new ArrayList<String>(Arrays.asList(TextArray));
+                    for(int i = TextArray.length -1 ; i >0;  i--) {
+                        if(list.get(i).replaceAll("\n","").replaceAll("\\s+", "").replaceAll("=","").length() < 30) {
+                            list.remove(i);
+                        }
+                    }
+
+                    ArrayList<String[]> contentArr = new ArrayList<>();
+                    for(int i = 0; i < list.size(); i++) {
+                        if(i == 0 ) {
+                            contentArr.add(new String[]{"Description", String.valueOf(list.get(i)).replaceAll("~","")});
+                        }
+                        else {
+                            String[] temp = list.get(i).split("(?<=([=]{2}\\s[a-zA-Z0-9\\s]{0,200}\\s[=]{2}))");
+                            contentArr.add(new String[] {temp[0].replaceAll("== ","").replaceAll(" ==",""), temp[1].replaceAll("~","")});
+                        }
+
+                    }
+
+                    for(int i = 0; i < contentArr.size(); i++) {
+                        Log.i("data",String.valueOf(contentArr.get(i)[1]));
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.i(TAG, "ERRORERRORERROR :" + error.toString());
+            }
+        });
+        mRequestQueue.add(mStringRequest);
+    }
+
     private void replaceFragment(Fragment fragment) {
         FragmentManager fragmentManager  = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -136,4 +213,6 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.commit();
 
     }
+//^[a-zA-Z0-9].*
+//    (?<===)(.*)(?===)
 }
