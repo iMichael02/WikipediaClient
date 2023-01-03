@@ -1,6 +1,7 @@
 package vn.edu.usth.wikiapp;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -11,11 +12,19 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 public class activity_signup extends AppCompatActivity {
 
     private EditText inputusername, inputpassword, inputpassword2;
     Button signup_button;
     ActionBar actionBar;
+    private FirebaseAuth mAuth;
+
 
 
     @Override
@@ -35,6 +44,20 @@ public class activity_signup extends AppCompatActivity {
                 checkCredentials();
             }
         });
+
+        mAuth = FirebaseAuth.getInstance();
+
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        // Check if user is signed in (non-null) and update UI accordingly.
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if(currentUser != null){
+            Toast.makeText(this,"Not Logged In", Toast.LENGTH_SHORT).show();
+            Log.i("status","not logged in");
+        }
     }
 
     private void checkCredentials() {
@@ -48,8 +71,31 @@ public class activity_signup extends AppCompatActivity {
             Toast.makeText(activity_signup.this, "Create account failed!", Toast.LENGTH_SHORT).show();
         }
         else{
+            signUp();
             Toast.makeText(activity_signup.this, "Create account successfully!", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public void signUp() {
+        String checkusername = inputusername.getText().toString();
+        String checkpassword = inputpassword.getText().toString();
+
+        mAuth.createUserWithEmailAndPassword(checkusername, checkpassword)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d("signUpStatus", "createUserWithEmail:success");
+                            FirebaseUser user = mAuth.getCurrentUser();
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w("signUpStatus", "createUserWithEmail:failure", task.getException());
+                            Toast.makeText(activity_signup.this, "Authentication failed.",Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+
     }
 
     private void showError(EditText username, String s) {

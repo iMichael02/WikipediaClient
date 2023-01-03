@@ -29,6 +29,18 @@
 
         </androidx.appcompat.widget.SearchView>
         <View style = "@style/Divider"></View>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="Past searches"
+            android:textColor="@color/textColor"
+            android:textSize="16dp"
+            android:visibility="gone"
+            android:id="@+id/pastSearch"
+            >
+
+        </TextView>
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -42,21 +54,28 @@
             android:layout_height="fill_parent"
             android:id="@+id/missingText"
             android:orientation="vertical"
+            android:background="@color/colorPrimary"
+            android:gravity="center"
+            android:visibility="gone"
             >
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
+                android:id="@+id/logInSearch"
+                android:textSize="20dp"
                 android:textColor="@color/textColor"
-                android:text="You have yet to make a search"
+                android:text="Log in to see your past searches."
                 >
             </TextView>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
+                android:textSize="20dp"
+                android:id="@+id/signUpSearch"
                 android:textColor="@color/textColor"
-                android:text="Start with the search bar up there!"
+                android:text="Or create your account here!"
                 >
             </TextView>
 

@@ -1,5 +1,7 @@
 package vn.edu.usth.wikiapp;
 
+import static android.content.ContentValues.TAG;
+
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -18,15 +20,30 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -35,6 +52,12 @@ import java.util.List;
  * create an instance of this fragment.
  */
 public class HomeFragment extends Fragment {
+
+    private RequestQueue mRequestQueue;
+    private StringRequest mStringRequest;
+    private RecyclerView recyclerView;
+    String dayText;
+    String monthText;
 
 
 
@@ -53,6 +76,8 @@ public class HomeFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
     }
 
     @Override
@@ -75,6 +100,57 @@ public class HomeFragment extends Fragment {
 
             }
         });
+        dataInit();
+    }
 
+    public void dataInit() {
+        mRequestQueue = Volley.newRequestQueue(getContext());
+        Date date;
+        Calendar currentTime = Calendar.getInstance();
+        int year = currentTime.get(Calendar.YEAR);
+        int month = currentTime.get(Calendar.MONTH)+1;
+        int day = currentTime.get(Calendar.DAY_OF_MONTH);
+        if(month<10) {
+            monthText = "0"+String.valueOf(month);
+        }
+        if(day<10) {
+            dayText = "0"+String.valueOf(day);
+        }
+
+        TextView todaysTitle = getView().findViewById(R.id.todaysTitle);
+        ImageView todaysPhoto = getView().findViewById(R.id.todaysPhoto);
+        TextView todaysDate = getView().findViewById(R.id.todaysDate);
+        TextView todaysContent = getView().findViewById(R.id.todaysContent);
+        String dateText = day+"/"+month+"/"+year;
+        String url = "https://en.wikipedia.org/api/rest_v1/feed/featured/"+String.valueOf(year)+"/"+String.valueOf(monthText)+"/"+String.valueOf(dayText);
+
+        mStringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    JSONObject tfa = jsonObject.getJSONObject("tfa");
+                    String title = tfa.getString("title").replaceAll("_"," ");
+                    JSONObject thumbnail = tfa.getJSONObject("thumbnail");
+                    String source = thumbnail.getString("source");
+                    JSONObject contentObject = tfa.getJSONObject("content_urls");
+                    String extract = tfa.getString("extract");
+                    new ImageLoadTask(source, todaysPhoto).execute();
+                    todaysTitle.setText(title);
+                    todaysDate.setText(dateText);
+                    todaysContent.setText(extract);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.i(TAG, "ERRORERRORERROR :" + error.toString());
+            }
+        });
+
+
+        mRequestQueue.add(mStringRequest);
     }
 }

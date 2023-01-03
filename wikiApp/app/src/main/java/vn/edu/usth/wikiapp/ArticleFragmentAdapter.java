@@ -69,7 +69,7 @@ public class ArticleFragmentAdapter extends RecyclerView.Adapter<ArticleFragment
     public void onBindViewHolder(@NonNull ArticleFragmentAdapter.RecyclerViewHolder holder, int position) {
         SearchResult model = SearchResultArrayList.get(position);
         holder.title.setText(model.getTitle());
-        holder.desc.setText(model.getSubDesc());
+        holder.desc.setText(toTitleCase(model.getSubDesc()));
         new ImageLoadTask(model.getImageSrc(), holder.imageView).execute();
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,6 +86,16 @@ public class ArticleFragmentAdapter extends RecyclerView.Adapter<ArticleFragment
 
     }
 
+    public static String toTitleCase(String givenString) {
+        String[] arr = givenString.split(" ");
+        StringBuffer sb = new StringBuffer();
+
+        for (int i = 0; i < arr.length; i++) {
+            sb.append(Character.toUpperCase(arr[i].charAt(0)))
+                    .append(arr[i].substring(1)).append(" ");
+        }
+        return sb.toString().trim();
+    }
 
     @Override
     public int getItemCount() {

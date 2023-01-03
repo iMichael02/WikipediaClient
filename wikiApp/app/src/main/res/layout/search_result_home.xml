@@ -34,8 +34,11 @@
                     android:id="@+id/searchTitleHome"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="8dp"
+                    android:paddingRight="8dp"
+                    android:paddingLeft="8dp"
+                    android:paddingTop="8dp"
                     android:text="Title"
+                    android:gravity="center_vertical"
                     android:textColor="@color/textColor"
                     android:textSize="18sp" />
 
@@ -46,7 +49,7 @@
                     android:layout_height="fill_parent"
                     android:paddingRight="8dp"
                     android:paddingLeft="8dp"
-                    android:gravity="center"
+                    android:gravity="center_vertical"
                     android:layout_below="@id/searchTitleHome"
                     android:text="Sub description"
                     android:textColor="@color/textColor" />

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "260504446932",
+    "project_id": "wikipediaclient-d6bb6",
+    "storage_bucket": "wikipediaclient-d6bb6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:260504446932:android:0702a66bc93ef8cdfb9841",
+        "android_client_info": {
+          "package_name": "vn.edu.usth.wikiapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "260504446932-6g083utm5nh203m0o6pqhb3gsnnub4lb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBiHx1IQqbuIPx9u3iQ9g28Qc9F3TdcjgY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "260504446932-6g083utm5nh203m0o6pqhb3gsnnub4lb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

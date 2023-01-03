@@ -13,12 +13,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -58,6 +61,8 @@ public class ArticleActivity extends AppCompatActivity {
     private StringRequest mBigRequest;
     private JsonObjectRequest mJsonObjectRequest;
     String otherUrl = "https://en.wikipedia.org/w/api.php?action=query&prop=revisions&rvprop=content&titles=pizza&format=json";
+    DisplayMetrics displayMetrics = new DisplayMetrics();
+
 
 
 
@@ -70,6 +75,8 @@ public class ArticleActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerView);
         toolbar = findViewById(R.id.toolbarCustom);
         search = findViewById(R.id.searchButton);
+
+
 
 
         search.setOnClickListener(new View.OnClickListener() {
@@ -89,9 +96,8 @@ public class ArticleActivity extends AppCompatActivity {
         });
         Intent intent = getIntent();
         String str = intent.getStringExtra("message_key");
-
-        String url = "https://en.wikipedia.org/w/api.php?action=query&titles="+str+"&prop=extracts&explaintext&format=json";
-
+        Log.i("asdf", String.valueOf(getScreenWidth()));
+        String url = "https://en.wikipedia.org/w/api.php?action=query&prop=extracts|pageimages|pageterms&explaintext&format=json&format=json&pithumbsize="+String.valueOf(getScreenWidth())+"&titles="+str;
         initData(url);
 
 
@@ -131,7 +137,13 @@ public class ArticleActivity extends AppCompatActivity {
 //    private void setRecyclerView() {
 //        initData();
 //    }
+    public static int getScreenWidth() {
+        return Resources.getSystem().getDisplayMetrics().widthPixels;
+}
 
+    public static int getScreenHeight() {
+        return Resources.getSystem().getDisplayMetrics().heightPixels;
+    }
 
 
     private void initData(String url) {
@@ -148,7 +160,29 @@ public class ArticleActivity extends AppCompatActivity {
                     JSONObject pageObject = queryObject.getJSONObject("pages");
                     int pageNo = Integer.parseInt(pageObject.names().getString(0));
                     JSONObject extractedObject = pageObject.getJSONObject(String.valueOf(pageNo));
+                    String title = extractedObject.getString("title");
+                    JSONObject terms = extractedObject.getJSONObject("terms");
+                    String desc = terms.getString("description");
                     String Text = extractedObject.getString("extract");
+                    String thumbnail;
+                    if(extractedObject.has("thumbnail")) {
+                        JSONObject thumbnailObj = extractedObject.getJSONObject("thumbnail");
+                        thumbnail = thumbnailObj.getString("source");
+                    }
+                    else {
+                        thumbnail = "https://phutungnhapkhauchinhhang.com/wp-content/uploads/2020/06/default-thumbnail.jpg";
+                    }
+                    Log.i("thumbnail",thumbnail);
+                    ImageView mainPhoto = findViewById(R.id.mainPhoto);
+                    new ImageLoadTask(thumbnail, mainPhoto).execute();
+
+                    TextView titleView = findViewById(R.id.articleTitle);
+                    TextView descView = findViewById(R.id.articleDesc);
+
+                    titleView.setText(title);
+                    String myString = desc.replaceAll("\"","").replaceAll("\\[","").replaceAll("\\]","");
+                    descView.setText(toTitleCase(myString));
+
                     String[] TextArray = Text.replaceAll("\n","~").replaceAll("\t","~").split("(?=((?<!=)[=]{2}\\s*[a-zA-Z0-9\\s]*\\s[=]{2}))");
 
                     List<String> list = new ArrayList<String>(Arrays.asList(TextArray));
@@ -190,6 +224,7 @@ public class ArticleActivity extends AppCompatActivity {
             }
         });
 
+
         mRequestQueue.add(mStringRequest);
     }
 
@@ -198,6 +233,17 @@ public class ArticleActivity extends AppCompatActivity {
         // Always call the superclass method first
         super.onPause();
         Log.i("Weather Activity","onPause() finished");
+    }
+
+    public static String toTitleCase(String givenString) {
+        String[] arr = givenString.split(" ");
+        StringBuffer sb = new StringBuffer();
+
+        for (int i = 0; i < arr.length; i++) {
+            sb.append(Character.toUpperCase(arr[i].charAt(0)))
+                    .append(arr[i].substring(1)).append(" ");
+        }
+        return sb.toString().trim();
     }
 
     @Override

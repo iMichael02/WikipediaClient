@@ -2,6 +2,9 @@ package vn.edu.usth.wikiapp;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +17,10 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,6 +41,7 @@ public class VersionsAdapter extends RecyclerView.Adapter<VersionsAdapter.Versio
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row,parent,false);
         return new VersionVH(view);
     }
+
 
     @Override
     public void onBindViewHolder(@NonNull VersionVH holder, int position) {
@@ -65,7 +73,6 @@ public class VersionsAdapter extends RecyclerView.Adapter<VersionsAdapter.Versio
             codeNameTxt= itemView.findViewById(R.id.code_name);
             descriptionTxt = itemView.findViewById(R.id.desc);
             imgView = itemView.findViewById(R.id.openCloseArrow);
-
             linearLayout = itemView.findViewById(R.id.linear_layout);
             expandable_layout = itemView.findViewById(R.id.expandable_layout);
 
