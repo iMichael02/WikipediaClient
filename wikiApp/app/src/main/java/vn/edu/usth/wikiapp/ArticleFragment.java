@@ -320,7 +320,6 @@ public class ArticleFragment extends Fragment {
                                 }
                             }
                     );
-
                     articleFragmentAdapter.notifyDataSetChanged();
 
                 } catch (JSONException e) {

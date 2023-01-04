@@ -10,7 +10,7 @@
     >
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:id="@+id/homePage"
         android:layout_marginTop="72dp"
         android:layout_marginBottom="72dp"
@@ -18,7 +18,7 @@
         >
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
             <LinearLayout
                 android:id="@+id/home_top"
@@ -48,31 +48,28 @@
 
                 </TextView>
             </LinearLayout>
-
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/today_news"
+                android:text="Today's featured article"
                 android:textColor="@color/textColor"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 android:layout_marginTop="12dp"
                 android:layout_marginBottom="12dp"
                 android:paddingLeft="16sp"/>
-
             <androidx.cardview.widget.CardView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/colorPrimary"
-                app:cardElevation="4dp"
                 app:cardCornerRadius="8dp"
+                android:layout_margin="20dp"
+
                 >
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:layout_margin="20dp"
                     android:background="@color/layoutMain"
                     android:id ="@+id/clickDemo"
 
@@ -123,74 +120,10 @@
 
             </androidx.cardview.widget.CardView>
 
-<!--            <androidx.cardview.widget.CardView-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:backgroundTint="@color/colorPrimary"-->
-<!--                app:cardElevation="4dp"-->
-<!--                app:cardCornerRadius="8dp"-->
-<!--                >-->
-<!--                <LinearLayout-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:orientation="vertical"-->
-<!--                    android:layout_margin="20dp"-->
-<!--                    android:background="@color/layoutMain"-->
-<!--                    android:id ="@+id/clickDemo"-->
-
-<!--                    >-->
-
-<!--                    <ImageView-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="250sp"-->
-<!--                        android:scaleType="centerCrop"-->
-<!--                        android:src="@drawable/today_news"-->
-<!--                        android:id="@+id/todaysPhoto"-->
-<!--                        />-->
-<!--                    <LinearLayout-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:orientation="vertical"-->
-<!--                        android:padding="12dp"-->
-<!--                        >-->
-<!--                        <TextView-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:text="16/12/2022"-->
-<!--                            android:textSize="12dp"-->
-<!--                            android:id="@+id/todaysDate"-->
-<!--                            android:textColor="@color/textColor"-->
-<!--                            />-->
-<!--                        <TextView-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:text="Tool, Slipknot, A7X + Pantera Will Lead Welcome to Rockville 2023"-->
-<!--                            android:textColor="@color/textColor"-->
-<!--                            android:textSize="16dp"-->
-<!--                            android:id="@+id/todaysTitle"-->
-<!--                            android:textStyle="bold"-->
-<!--                            />-->
-<!--                        <TextView-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:text="See the full lineup"-->
-<!--                            android:textColor="@color/textColor"-->
-<!--                            android:textSize="12dp"-->
-<!--                            android:id="@+id/todaysContent"-->
-<!--                            />-->
-<!--                    </LinearLayout>-->
-
-
-
-<!--                </LinearLayout>-->
-
-<!--            </androidx.cardview.widget.CardView>-->
-
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Relevant Articles"
+                android:text="Today's most read articles"
                 android:textStyle="bold"
                 android:textSize="20sp"
                 android:textColor="@color/textColor"
@@ -198,231 +131,50 @@
                 android:layout_marginTop="12dp"
                 android:layout_marginBottom="12dp"
                 android:paddingTop="10sp"/>
-            <androidx.cardview.widget.CardView
+            <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/colorPrimary"
-                app:cardElevation="4dp"
-                app:cardCornerRadius="8dp"
+                android:id="@+id/homeMostRead"
                 >
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_margin="20dp"
-                    android:background="@color/layoutMain">
 
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="250sp"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/wed"
-                        android:layout_marginBottom="8dp"
-                        />
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="12dp"
-                        android:orientation="vertical"
-                        >
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="10/12/2022"
-                            android:textColor="@color/textColor"
-                            android:textSize="12dp"
-                            />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Wednesday Addams"
-                            android:textSize="16dp"
-                            android:textStyle="bold"
-                            android:textColor="@color/textColor"
-
-
-                            />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Fictional Character"
-                            android:textColor="@color/textColor"
-                            android:textSize="12dp"
-
-                            />
-                    </LinearLayout>
-
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-            <androidx.cardview.widget.CardView
+            </androidx.recyclerview.widget.RecyclerView>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Today's news"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:textColor="@color/textColor"
+                android:paddingLeft="16sp"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="12dp"
+                android:paddingTop="10sp"/>
+            <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/colorPrimary"
-                app:cardElevation="4dp"
-                app:cardCornerRadius="8dp"
+                android:id="@+id/homeNews"
                 >
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_margin="20dp"
-                    android:background="@color/layoutMain">
 
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="250sp"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/wed"
-                        android:layout_marginBottom="8dp"
-                        />
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="12dp"
-                        android:orientation="vertical"
-                        >
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="10/12/2022"
-                            android:textColor="@color/textColor"
-                            android:textSize="12dp"
-                            />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Wednesday Addams"
-                            android:textSize="16dp"
-                            android:textStyle="bold"
-                            android:textColor="@color/textColor"
-
-
-                            />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Fictional Character"
-                            android:textColor="@color/textColor"
-                            android:textSize="12dp"
-
-                            />
-                    </LinearLayout>
-
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
+            </androidx.recyclerview.widget.RecyclerView>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="On this day"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:textColor="@color/textColor"
+                android:paddingLeft="16sp"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="12dp"
+                android:paddingTop="10sp"/>
+            <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/colorPrimary"
-                app:cardElevation="4dp"
-                app:cardCornerRadius="8dp"
+                android:id="@+id/homeOTD"
                 >
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_margin="20dp"
-                    android:background="@color/layoutMain">
 
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="250sp"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/wed"
-                        android:layout_marginBottom="8dp"
-                        />
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="12dp"
-                        android:orientation="vertical"
-                        >
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="10/12/2022"
-                            android:textColor="@color/textColor"
-                            android:textSize="12dp"
-                            />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Wednesday Addams"
-                            android:textSize="16dp"
-                            android:textStyle="bold"
-                            android:textColor="@color/textColor"
+            </androidx.recyclerview.widget.RecyclerView>
 
-
-                            />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Fictional Character"
-                            android:textColor="@color/textColor"
-                            android:textSize="12dp"
-
-                            />
-                    </LinearLayout>
-
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@color/colorPrimary"
-                app:cardElevation="4dp"
-                app:cardCornerRadius="8dp"
-                >
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_margin="20dp"
-                    android:background="@color/layoutMain">
-
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="250sp"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/wed"
-                        android:layout_marginBottom="8dp"
-                        />
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="12dp"
-                        android:orientation="vertical"
-                        >
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="10/12/2022"
-                            android:textColor="@color/textColor"
-                            android:textSize="12dp"
-                            />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Wednesday Addams"
-                            android:textSize="16dp"
-                            android:textStyle="bold"
-                            android:textColor="@color/textColor"
-
-
-                            />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Fictional Character"
-                            android:textColor="@color/textColor"
-                            android:textSize="12dp"
-
-                            />
-                    </LinearLayout>
-
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
 
 
 

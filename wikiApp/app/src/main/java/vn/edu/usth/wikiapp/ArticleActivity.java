@@ -96,7 +96,6 @@ public class ArticleActivity extends AppCompatActivity {
         });
         Intent intent = getIntent();
         String str = intent.getStringExtra("message_key");
-        Log.i("asdf", String.valueOf(getScreenWidth()));
         String url = "https://en.wikipedia.org/w/api.php?action=query&prop=extracts|pageimages|pageterms&explaintext&format=json&format=json&pithumbsize="+String.valueOf(getScreenWidth())+"&titles="+str;
         initData(url);
 

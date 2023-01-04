@@ -2,36 +2,24 @@ package vn.edu.usth.wikiapp;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.media.Image;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 
-public class ArticleFragmentAdapter extends RecyclerView.Adapter<ArticleFragmentAdapter.RecyclerViewHolder> {
-
+public class MostReadAdapter extends RecyclerView.Adapter<MostReadAdapter.RecyclerViewHolder> {
     private Context context;
-    private ArrayList<SearchResult> PastSearchResultArrayList;
-    private ArrayList<SearchResult> SearchResultArrayList;
+    private ArrayList<MostReadResult> OnThisDayResultArrayList;
 
-
-    public ArticleFragmentAdapter(Context context, ArrayList<SearchResult> SearchResultArrayList) {
+    public MostReadAdapter(Context context, ArrayList<MostReadResult> OnThisDayResultArrayList) {
         this.context = context;
-        this.SearchResultArrayList = SearchResultArrayList;
+        this.OnThisDayResultArrayList = OnThisDayResultArrayList;
     }
 
     public static class RecyclerViewHolder extends RecyclerView.ViewHolder {
@@ -39,36 +27,36 @@ public class ArticleFragmentAdapter extends RecyclerView.Adapter<ArticleFragment
         TextView desc;
         TextView id;
         ImageView imageView;
+        TextView rank;
         public RecyclerViewHolder(@NonNull View itemView) {
             super(itemView);
-            title = itemView.findViewById(R.id.searchTitleHome);
-            desc = itemView.findViewById(R.id.searchSubDescHome);
-            id = itemView.findViewById(R.id.idHome);
-            imageView = itemView.findViewById(R.id.searchImg);
+            title = itemView.findViewById(R.id.mostReadTitle);
+            desc = itemView.findViewById(R.id.mostReadDesc);
+            id = itemView.findViewById(R.id.mostReadId);
+            imageView = itemView.findViewById(R.id.mostReadImg);
+            rank = itemView.findViewById(R.id.mostReadRanking);
         }
 
     }
 
-    public void filterList(ArrayList<SearchResult> filterlist) {
-        // below line is to add our filtered
-        // list in our course array list.
-        SearchResultArrayList = filterlist;
-        notifyDataSetChanged();
-    }
 
     @NonNull
     @Override
-    public ArticleFragmentAdapter.RecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(context).inflate(R.layout.search_result_home, parent,false);
+
+
+
+    public MostReadAdapter.RecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View v = LayoutInflater.from(context).inflate(R.layout.mostread_result, parent,false);
         return new RecyclerViewHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ArticleFragmentAdapter.RecyclerViewHolder holder, int position) {
-        SearchResult model = SearchResultArrayList.get(position);
+    public void onBindViewHolder(@NonNull MostReadAdapter.RecyclerViewHolder holder, int position) {
+        MostReadResult model = OnThisDayResultArrayList.get(position);
         holder.title.setText(model.getTitle());
         holder.desc.setText(toTitleCase(model.getSubDesc()));
         new ImageLoadTask(model.getImageSrc(), holder.imageView).execute();
+        holder.rank.setText(model.getRank());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -80,8 +68,6 @@ public class ArticleFragmentAdapter extends RecyclerView.Adapter<ArticleFragment
 
             }
         });
-
-
     }
 
     public static String toTitleCase(String givenString) {
@@ -97,6 +83,6 @@ public class ArticleFragmentAdapter extends RecyclerView.Adapter<ArticleFragment
 
     @Override
     public int getItemCount() {
-        return SearchResultArrayList.size();
+        return OnThisDayResultArrayList.size();
     }
 }
