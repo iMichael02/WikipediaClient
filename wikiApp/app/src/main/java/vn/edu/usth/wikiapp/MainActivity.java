@@ -80,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setHomeAsUpIndicator(R.drawable.ic_menu);
 
+
         SharedPreferences sharedPreferences = null;
 
         sharedPreferences = getSharedPreferences( "night", 0);
@@ -89,6 +90,7 @@ public class MainActivity extends AppCompatActivity {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         }
 
+        TextView aboutUsTv = findViewById(R.id.about_us_article);
         mDrawerLayout = findViewById(R.id.drawer_layout_main);
         settings = findViewById(R.id.settings_home);
         mViewPager2 = findViewById(R.id.view_pager);
@@ -112,6 +114,18 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+        aboutUsTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, AboutUs.class);
+                startActivity(intent);
+            }
+        });
+
+
+
+
         mBottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {

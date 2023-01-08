@@ -21,7 +21,7 @@ public class SettingsActivity extends AppCompatActivity {
 
         SharedPreferences sharedPreferences = null;
 
-        switchCompat = findViewById(R.id.nightModeSwitch);
+        switchCompat = findViewById(R.id.lightModeSwitch);
         back = findViewById(R.id.back_btn_settings);
 
         back.setOnClickListener(new View.OnClickListener() {
