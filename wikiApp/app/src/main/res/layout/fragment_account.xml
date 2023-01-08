@@ -66,13 +66,14 @@
             android:layout_marginTop="30dp"
             android:layout_gravity="center"
             android:padding="10dp"
-            android:background="@color/editText"
+            android:background="@color/newEditText"
             android:drawableLeft="@drawable/ic_baseline_person_outline_24"
             android:drawablePadding="4dp"
             android:gravity="center_vertical"
             android:hint="Username"
+            android:textColorHint="#C8C8C8"
             android:paddingLeft="16dp"
-            android:textColor="@color/black"
+            android:textColor="@color/textColor"
             android:textSize="20sp"
             />
 
@@ -84,15 +85,16 @@
             android:layout_gravity="center"
 
             android:layout_marginTop="30dp"
-            android:background="@color/editText"
+            android:background="@color/newEditText"
             android:drawableLeft="@drawable/ic_baseline_password_24"
             android:drawablePadding="4dp"
             android:gravity="center_vertical"
             android:hint="Password"
+            android:textColorHint="#C8C8C8"
             android:inputType="textPassword"
             android:paddingLeft="16dp"
             android:singleLine="true"
-            android:textColor="@color/black"
+            android:textColor="@color/textColor"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -137,58 +139,58 @@
             android:layout_gravity="center"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
-        <TextView
-            android:id="@+id/signin_options"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Or sign in via..."
-            android:textSize="18sp"
-            android:textColor="@color/textColor"
-            android:layout_gravity="center"
-            app:layout_constraintStart_toStartOf="parent" />
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center"
-            >
+<!--        <TextView-->
+<!--            android:id="@+id/signin_options"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Or sign in via..."-->
+<!--            android:textSize="18sp"-->
+<!--            android:textColor="@color/textColor"-->
+<!--            android:layout_gravity="center"-->
+<!--            app:layout_constraintStart_toStartOf="parent" />-->
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:orientation="horizontal"-->
+<!--            android:gravity="center"-->
+<!--            >-->
 
-            <ImageView
-                android:id="@+id/fb_icon"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:backgroundTint="@color/white"
-                android:layout_margin="12dp"
+<!--            <ImageView-->
+<!--                android:id="@+id/fb_icon"-->
+<!--                android:layout_width="50dp"-->
+<!--                android:layout_height="50dp"-->
+<!--                android:backgroundTint="@color/white"-->
+<!--                android:layout_margin="12dp"-->
 
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:srcCompat="@drawable/fb_icon"
-                tools:ignore="MissingConstraints" />
+<!--                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:srcCompat="@drawable/fb_icon"-->
+<!--                tools:ignore="MissingConstraints" />-->
 
-            <ImageView
-                android:id="@+id/ggl_icon"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:backgroundTint="@color/white"
-                android:layout_margin="12dp"
+<!--            <ImageView-->
+<!--                android:id="@+id/ggl_icon"-->
+<!--                android:layout_width="50dp"-->
+<!--                android:layout_height="50dp"-->
+<!--                android:backgroundTint="@color/white"-->
+<!--                android:layout_margin="12dp"-->
 
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/fb_icon"
-                app:srcCompat="@drawable/ggl_icon"
-                tools:ignore="MissingConstraints" />
+<!--                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                app:layout_constraintEnd_toStartOf="@+id/fb_icon"-->
+<!--                app:srcCompat="@drawable/ggl_icon"-->
+<!--                tools:ignore="MissingConstraints" />-->
 
-            <ImageView
-                android:id="@+id/tw_icon"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_margin="12dp"
-                android:backgroundTint="@color/white"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/fb_icon"
-                app:srcCompat="@drawable/tw_icon"
-                tools:ignore="MissingConstraints" />
-        </LinearLayout>
+<!--            <ImageView-->
+<!--                android:id="@+id/tw_icon"-->
+<!--                android:layout_width="50dp"-->
+<!--                android:layout_height="50dp"-->
+<!--                android:layout_margin="12dp"-->
+<!--                android:backgroundTint="@color/white"-->
+<!--                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                app:layout_constraintStart_toEndOf="@+id/fb_icon"-->
+<!--                app:srcCompat="@drawable/tw_icon"-->
+<!--                tools:ignore="MissingConstraints" />-->
+<!--        </LinearLayout>-->
 
 
 

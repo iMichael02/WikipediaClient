@@ -53,16 +53,7 @@
                         android:layout_height="wrap_content"
                         android:paddingRight="16dp"
                         >
-                        <TextView
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:textOff=""
-                            android:textOn = ""
-                            android:background="@drawable/ic_search"
-                            android:layout_alignParentRight="true"
-                            android:id = "@+id/searchButton"
 
-                            ></TextView>
                         <ToggleButton
                             android:layout_width="24dp"
                             android:layout_height="24dp"
@@ -70,8 +61,8 @@
                             android:textOn=""
                             android:background="@drawable/toggle_selector"
                             android:layout_alignParentRight="true"
-                            android:layout_marginRight="36dp"
-
+                            android:id="@+id/bookmark"
+                            android:visibility="gone"
                             ></ToggleButton>
 
 
@@ -190,8 +181,6 @@
 
         android:background="@color/colorPrimary"
         app:itemTextColor="@color/textColor"
-        android:paddingTop="56dp"
-
         >
 
 <!--        app:menu="@menu/navigation_menu"-->
@@ -218,7 +207,6 @@
                     android:paddingLeft="12dp"
                     android:paddingRight="12dp"
                     android:paddingTop="12dp"
-
                     >
 
                 </TextView>
@@ -227,6 +215,7 @@
                     android:layout_height="wrap_content"
                     android:text="Anonymous user"
                     android:textSize="16dp"
+                    android:id="@+id/userEmailNavArticle"
                     android:textColor="@color/textColor"
                     android:paddingLeft="12dp"
                     android:paddingRight="12dp"
@@ -305,44 +294,6 @@
                 <View style = "@style/Divider"></View>
 
             </LinearLayout>
-<!--            <LinearLayout-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:orientation="vertical"-->
-
-<!--                >-->
-<!--                <View style = "@style/Divider"></View>-->
-
-<!--                <LinearLayout-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:orientation="horizontal"-->
-<!--                    android:padding="12dp"-->
-
-<!--                    >-->
-<!--                    <TextView-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:text="Switch reading mode"-->
-<!--                        android:textColor="@color/textColor"-->
-<!--                        android:textSize="16dp"-->
-<!--                        android:layout_gravity="center_vertical"-->
-<!--                        android:layout_marginRight="8dp"-->
-<!--                        >-->
-
-<!--                    </TextView>-->
-<!--                                <androidx.appcompat.widget.SwitchCompat-->
-<!--                                    android:layout_width="48dp"-->
-<!--                                    android:layout_height="24dp"-->
-<!--                                    android:theme="@style/SCBSwitch"-->
-<!--                                    android:id="@+id/SwitchCompat"-->
-<!--                                    >-->
-<!--                                </androidx.appcompat.widget.SwitchCompat>-->
-<!--                </LinearLayout>-->
-<!--                <View style = "@style/Divider"></View>-->
-
-<!--            </LinearLayout>-->
-
 
 
         </LinearLayout>

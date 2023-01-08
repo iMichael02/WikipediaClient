@@ -24,6 +24,7 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 
 import com.android.volley.Request;
@@ -33,6 +34,22 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -52,12 +69,17 @@ public class ArticleActivity extends AppCompatActivity {
     Toolbar toolbar;
     public DrawerLayout drawerLayout;
     public ActionBarDrawerToggle actionBarDrawerToggle;
+    private DatabaseReference mDatabase;
     SwitchCompat switchCompat;
     TextView search;
     TextView button;
     TextView receiver_msg;
     private RequestQueue mRequestQueue;
     private StringRequest mStringRequest;
+    private FirebaseAuth mAuth;
+    private FirebaseFirestore db;
+
+    TextView userEmail;
     private StringRequest mBigRequest;
     private JsonObjectRequest mJsonObjectRequest;
     String otherUrl = "https://en.wikipedia.org/w/api.php?action=query&prop=revisions&rvprop=content&titles=pizza&format=json";
@@ -74,17 +96,158 @@ public class ArticleActivity extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.recyclerView);
         toolbar = findViewById(R.id.toolbarCustom);
-        search = findViewById(R.id.searchButton);
+        db = FirebaseFirestore.getInstance();
+
+
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        Intent intent = getIntent();
+        String str = intent.getStringExtra("message_key");
+        String url = "https://en.wikipedia.org/w/api.php?action=query&prop=extracts|pageimages|pageterms&explaintext&format=json&format=json&pithumbsize="+String.valueOf(getScreenWidth())+"&titles="+str;
+        initData(url);
+
+        if(currentUser!= null) {
+            userEmail = findViewById(R.id.userEmailNavArticle);
+            userEmail.setText(currentUser.getEmail());
+            ToggleButton toggleBtn = findViewById(R.id.bookmark);
+            toggleBtn.setVisibility(View.VISIBLE);
+            CollectionReference dbCourses = db.collection("userData");
+            String userEmail = currentUser.getEmail();
+            String userId = FirebaseAuth.getInstance().getUid();
+            ArrayList<String> favList;
+
+            dbCourses.document(userId)
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                            if (task.isSuccessful()) {
+                                DocumentSnapshot document = task.getResult();
+                                if (document.exists()) {
+                                    ArrayList<String> favList = (ArrayList<String>) document.getData().get("favorite");
+                                    if(favList.contains(str)) {
+                                        Log.d("statusUpate", "Document exists");
+                                        toggleBtn.setChecked(true);
+                                        toggleBtn.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                // on below line we are checking if
+                                                // toggle button is checked or not.
+                                                if (toggleBtn.isChecked()) {
+                                                    Intent intent = getIntent();
+                                                    String str = intent.getStringExtra("message_key");
+                                                    favList.add(str);
+                                                    SavedInstance user = new SavedInstance();
+                                                    user.setFavorite(favList);
+                                                    user.setEmail(userEmail);
+                                                    user.setUid(userId);
+                                                    dbCourses.document(userId).set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                        @Override
+                                                        public void onSuccess(Void aVoid) {
+                                                            Toast.makeText(ArticleActivity.this, "data removed from fav", Toast.LENGTH_SHORT).show();
+                                                        }
+                                                    }).addOnFailureListener(new OnFailureListener() {
+                                                        @Override
+                                                        public void onFailure(@NonNull Exception e) {
+                                                            Toast.makeText(ArticleActivity.this, "Fail to add data " + e, Toast.LENGTH_SHORT).show();
+
+                                                        }
+                                                    });
+                                                    Log.i("new Status","favorite true");
+                                                } else {
+                                                    Intent intent = getIntent();
+                                                    String str = intent.getStringExtra("message_key");
+                                                    favList.remove(str);
+                                                    SavedInstance user = new SavedInstance();
+                                                    user.setFavorite(favList);
+                                                    user.setEmail(userEmail);
+                                                    user.setUid(userId);
+                                                    dbCourses.document(userId).set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                        @Override
+                                                        public void onSuccess(Void aVoid) {
+                                                            Toast.makeText(ArticleActivity.this, "data added to fav", Toast.LENGTH_SHORT).show();
+                                                        }
+                                                    }).addOnFailureListener(new OnFailureListener() {
+                                                        @Override
+                                                        public void onFailure(@NonNull Exception e) {
+                                                            Toast.makeText(ArticleActivity.this, "Fail to add data " + e, Toast.LENGTH_SHORT).show();
+
+                                                        }
+                                                    });
+                                                    Log.i("new Status","favorite false");
+
+                                                }
+                                            }
+                                        });
+                                    }
+                                    else {
+                                        toggleBtn.setChecked(false);
+                                        toggleBtn.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                // on below line we are checking if
+                                                // toggle button is checked or not.
+                                                if (toggleBtn.isChecked()) {
+                                                    Intent intent = getIntent();
+                                                    String str = intent.getStringExtra("message_key");
+                                                    favList.add(str);
+                                                    SavedInstance user = new SavedInstance();
+                                                    user.setFavorite(favList);
+                                                    user.setEmail(userEmail);
+                                                    user.setUid(userId);
+                                                    dbCourses.document(userId).set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                        @Override
+                                                        public void onSuccess(Void aVoid) {
+                                                            Toast.makeText(ArticleActivity.this, "data removed from fav", Toast.LENGTH_SHORT).show();
+                                                        }
+                                                    }).addOnFailureListener(new OnFailureListener() {
+                                                        @Override
+                                                        public void onFailure(@NonNull Exception e) {
+                                                            Toast.makeText(ArticleActivity.this, "Fail to add data " + e, Toast.LENGTH_SHORT).show();
+
+                                                        }
+                                                    });
+                                                    Log.i("new Status","favorite true");
+                                                } else {
+                                                    Intent intent = getIntent();
+                                                    String str = intent.getStringExtra("message_key");
+                                                    favList.remove(str);
+                                                    SavedInstance user = new SavedInstance();
+                                                    user.setFavorite(favList);
+                                                    user.setEmail(userEmail);
+                                                    user.setUid(userId);
+                                                    dbCourses.document(userId).set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                        @Override
+                                                        public void onSuccess(Void aVoid) {
+                                                            Toast.makeText(ArticleActivity.this, "data added to fav", Toast.LENGTH_SHORT).show();
+                                                        }
+                                                    }).addOnFailureListener(new OnFailureListener() {
+                                                        @Override
+                                                        public void onFailure(@NonNull Exception e) {
+                                                            Toast.makeText(ArticleActivity.this, "Fail to add data " + e, Toast.LENGTH_SHORT).show();
+
+                                                        }
+                                                    });
+                                                    Log.i("new Status","favorite false");
+
+                                                }
+                                            }
+                                        });
+                                    }
+                                } else {
+                                    Log.d("statusUpate", "No such user data exists");
+                                }
+                            } else {
+                                Log.d("statusUpate", "get failed with ", task.getException());
+                            }
+                        }
+                    });
 
 
 
 
-        search.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openSearchActivity();
-            }
-        });
+        }
+
 
 
         button = findViewById(R.id.homeButton);
@@ -94,10 +257,7 @@ public class ArticleActivity extends AppCompatActivity {
                 openMain();
             }
         });
-        Intent intent = getIntent();
-        String str = intent.getStringExtra("message_key");
-        String url = "https://en.wikipedia.org/w/api.php?action=query&prop=extracts|pageimages|pageterms&explaintext&format=json&format=json&pithumbsize="+String.valueOf(getScreenWidth())+"&titles="+str;
-        initData(url);
+
 
 
         // drawer layout instance to toggle the menu icon to open
@@ -117,11 +277,106 @@ public class ArticleActivity extends AppCompatActivity {
     }
 
     public void openSearchActivity() {
-        Intent intent = new Intent(this, SearchActivity.class);
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 
+    public void writeNewUser(String title) {
+        Intent intent = getIntent();
+        String str = intent.getStringExtra("message_key");
+        CollectionReference dbCourses = db.collection("userData");
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        String userEmail = currentUser.getEmail();
+        String userId = FirebaseAuth.getInstance().getUid();
 
+
+        dbCourses.document(userId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        ArrayList<String> currArr = (ArrayList<String>) document.getData().get("favorite");
+                        currArr.add(str);
+
+                        SavedInstance user = new SavedInstance();
+                        user.setFavorite(currArr);
+                        user.setEmail(userEmail);
+                        user.setUid(userId);
+                        dbCourses.document(userId).set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Toast.makeText(ArticleActivity.this, "data added", Toast.LENGTH_SHORT).show();
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(ArticleActivity.this, "Fail to add data " + e, Toast.LENGTH_SHORT).show();
+
+                            }
+                        });
+
+                    } else {
+                        ArrayList<String> arr = new ArrayList<String>();
+                        arr.add(str);
+                        SavedInstance user = new SavedInstance();
+                        user.setFavorite(arr);
+                        user.setEmail(userEmail);
+                        user.setUid(userId);
+                        dbCourses.document(userId).set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Toast.makeText(ArticleActivity.this, "data added", Toast.LENGTH_SHORT).show();
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(ArticleActivity.this, "Fail to add data " + e, Toast.LENGTH_SHORT).show();
+
+                            }
+                        });
+
+                    }
+                } else {
+                    Log.d(TAG, "get failed with ", task.getException());
+                }
+            }
+        });
+
+
+
+
+//        ArrayList<String> arr = new ArrayList<String>();
+//        SavedInstance user = new SavedInstance();
+//        user.setFavorite(new ArrayList<String>());
+//        user.setEmail(userEmail);
+//        user.setUid(userId);
+//        dbCourses.document(userId).set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+//            @Override
+//            public void onSuccess(Void aVoid) {
+//                Toast.makeText(ArticleActivity.this, "data added", Toast.LENGTH_SHORT).show();
+//            }
+//        }).addOnFailureListener(new OnFailureListener() {
+//            @Override
+//            public void onFailure(@NonNull Exception e) {
+//                Toast.makeText(ArticleActivity.this, "Fail to add data " + e, Toast.LENGTH_SHORT).show();
+//
+//            }
+//        });
+//        mDatabase.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                mDatabase.setValue(user);
+//                Toast.makeText(ArticleActivity.this, "data added", Toast.LENGTH_SHORT).show();
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//                Toast.makeText(ArticleActivity.this, "Fail to add data " + error, Toast.LENGTH_SHORT).show();
+//
+//            }
+//        });
+    }
 
     public void openMain() {
 //        Intent intent = new Intent(this, MainActivity.class);

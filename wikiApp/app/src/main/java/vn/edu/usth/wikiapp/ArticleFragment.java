@@ -261,92 +261,12 @@ public class ArticleFragment extends Fragment {
 
     }
 
-    private void dataInit() {
-
-        // below line we are creating a new array list
-        String shortUrl = "https://en.wikipedia.org/w/api.php?action=query&formatversion=2&generator=prefixsearch&gpssearch=pizza&gpslimit=10&prop=pageimages%7Cpageterms&piprop=thumbnail&pithumbsize=50&pilimit=10&redirects=&wbptterms=description&format=json";
-
-
-        SearchResultArrayList = new ArrayList<SearchResult>();
-        mRequestQueue = Volley.newRequestQueue(getContext());
-
-        mStringRequest = new StringRequest(Request.Method.GET, shortUrl, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                try {
-                    JSONObject jsonObject = new JSONObject(response);
-                    JSONObject queryObject = jsonObject.getJSONObject("query");
-                    JSONArray pageObject = queryObject.getJSONArray("pages");
-
-                    for(int i = 0; i < pageObject.length(); i++) {
-                        JSONObject firstObject = pageObject.getJSONObject(i);
-                        String imageUrl;
-                        if(firstObject.has("thumbnail")) {
-                            JSONObject thumbnail = firstObject.getJSONObject("thumbnail");
-                            imageUrl = thumbnail.getString("source");
-                            Log.i("image", imageUrl);
-                        }
-                        else {
-                            imageUrl = "https://phutungnhapkhauchinhhang.com/wp-content/uploads/2020/06/default-thumbnail.jpg";
-                            Log.i("imageDefault", imageUrl);
-                        }
-                        JSONObject terms = firstObject.getJSONObject("terms");
-                        String title = firstObject.getString("title");
-                        JSONArray desc = terms.getJSONArray("description");
-                        String fullDesc = desc.getString(0);
-                        SearchResultArrayList.add(new SearchResult(title,fullDesc,String.valueOf(i), imageUrl));
-                    }
-                    ArticleFragmentAdapter articleFragmentAdapter = new ArticleFragmentAdapter(getContext(),SearchResultArrayList);
-
-                    // adding layout manager to our recycler view.
-                    // setting adapter to
-                    // our recycler view.
-                    recyclerView.setAdapter(articleFragmentAdapter);
-                    recyclerView.addOnItemTouchListener(
-                            new RecyclerView.OnItemTouchListener() {
-                                @Override
-                                public boolean onInterceptTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
-                                    return false;
-                                }
-
-                                @Override
-                                public void onTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
-
-                                }
-
-                                @Override
-                                public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
-
-                                }
-                            }
-                    );
-                    articleFragmentAdapter.notifyDataSetChanged();
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.i(TAG, "ERRORERRORERROR :" + error.toString());
-            }
-        });
-
-
-        mRequestQueue.add(mStringRequest);
-
-
-    }
-
     private void dataInitCustom(String text) {
 
         // below line we are creating a new array list
         String shortUrl = "https://en.wikipedia.org/w/api.php?action=query&formatversion=2&generator=prefixsearch&gpssearch="+text+"&gpslimit=10&prop=pageimages%7Cpageterms&piprop=thumbnail&pithumbsize=50&pilimit=10&redirects=&wbptterms=description&format=json";
-
         SearchResultArrayList = new ArrayList<SearchResult>();
         mRequestQueue = Volley.newRequestQueue(getContext());
-
         mStringRequest = new StringRequest(Request.Method.GET, shortUrl, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -406,11 +326,7 @@ public class ArticleFragment extends Fragment {
                 Log.i(TAG, "ERRORERRORERROR :" + error.toString());
             }
         });
-
-
         mRequestQueue.add(mStringRequest);
-
-
     }
 
 }

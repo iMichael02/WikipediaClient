@@ -75,7 +75,6 @@ public class ArticleFragmentAdapter extends RecyclerView.Adapter<ArticleFragment
                 String id = model.getTitle();
                 Intent intent = new Intent(context, ArticleActivity.class);
                 intent.putExtra("message_key", id);
-
                 context.startActivity(intent);
 
             }

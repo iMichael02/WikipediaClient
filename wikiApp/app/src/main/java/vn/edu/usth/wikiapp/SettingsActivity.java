@@ -1,10 +1,12 @@
 package vn.edu.usth.wikiapp;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
@@ -13,6 +15,7 @@ import androidx.appcompat.widget.SwitchCompat;
 public class SettingsActivity extends AppCompatActivity {
     SwitchCompat switchCompat;
     ImageView back;
+    RelativeLayout accSettings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,13 +24,21 @@ public class SettingsActivity extends AppCompatActivity {
 
         SharedPreferences sharedPreferences = null;
 
-        switchCompat = findViewById(R.id.lightModeSwitch);
+        switchCompat = findViewById(R.id.nightModeSwitch);
         back = findViewById(R.id.back_btn_settings);
-
+        accSettings = findViewById(R.id.account_settings_button);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
+            }
+        });
+
+        accSettings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(SettingsActivity.this, AccountSettingsActivity.class);
+                startActivity(intent);
             }
         });
 

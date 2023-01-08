@@ -16,5 +16,6 @@
     <color name = "layoutMain">#565656</color>
     <color name = "navElement">#949494</color>
     <color name = "editText">@color/white</color>
+    <color name = "newEditText">#0F0F0F</color>
 
 </resources>
