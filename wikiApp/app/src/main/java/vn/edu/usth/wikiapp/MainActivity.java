@@ -103,7 +103,14 @@ public class MainActivity extends AppCompatActivity {
         }
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
-
+        TextView aboutUsTv = findViewById(R.id.about_us_article);
+        aboutUsTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, AboutUs.class);
+                startActivity(intent);
+            }
+        });
         mDrawerLayout = findViewById(R.id.drawer_layout_main);
         settings = findViewById(R.id.settings_home);
         mViewPager2 = findViewById(R.id.view_pager);
