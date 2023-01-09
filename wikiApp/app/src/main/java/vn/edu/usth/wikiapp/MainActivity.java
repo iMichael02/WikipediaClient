@@ -144,17 +144,17 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                     switch (item.getItemId()) {
-                        case 0:
+                        case R.id.menu_home:
                             mViewPager2.setCurrentItem(0);
                             break;
-                        case 1:
+                        case R.id.menu_article:
                             mViewPager2.setCurrentItem(1);
                             break;
-                        case 2:
+                        case R.id.menu_saved:
                             mViewPager2.setCurrentItem(2);
                             break;
                     }
-                    return false;
+                    return true;
                 }
             });
 
@@ -201,17 +201,17 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                     switch (item.getItemId()) {
-                        case 0:
+                        case R.id.menu_home:
                             mViewPager2.setCurrentItem(0);
                             break;
-                        case 1:
+                        case R.id.menu_article:
                             mViewPager2.setCurrentItem(1);
                             break;
-                        case 2:
+                        case R.id.menu_account:
                             mViewPager2.setCurrentItem(2);
                             break;
                     }
-                    return false;
+                    return true;
                 }
             });
 

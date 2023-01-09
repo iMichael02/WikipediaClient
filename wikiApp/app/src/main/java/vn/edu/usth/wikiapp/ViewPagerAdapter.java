@@ -10,12 +10,10 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 import java.util.ArrayList;
 
 public class ViewPagerAdapter extends FragmentStateAdapter {
-
+    private int PAGE_COUNT = 3;
     public ViewPagerAdapter(@NonNull FragmentActivity fragmentActivity) {
         super(fragmentActivity);
     }
-
-
 
     @NonNull
     @Override
@@ -32,10 +30,8 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
         }
     }
 
-
-
     @Override
     public int getItemCount() {
-        return 3;
+        return PAGE_COUNT;
     }
 }
