@@ -122,7 +122,15 @@ public class AccountFragment extends Fragment {
             password = view.findViewById(R.id.password);
             String usernameValue = username.getText().toString();
             String passwordValue = password.getText().toString();
+            TextView noPw = view.findViewById(R.id.noPw);
+            noPw.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(getContext(), ForgetPwActivity.class);
+                    startActivity(intent);
 
+                }
+            });
             Button signin_button = (Button) view.findViewById(R.id.signin_button);
 
             // username: admin, password: admin

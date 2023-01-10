@@ -145,10 +145,10 @@ public class ArticleFragment extends Fragment {
         searchView = view.findViewById(R.id.searchViewHome);
         FirebaseUser user = mAuth.getCurrentUser();
         if(user!=null) {
+            getPastSearch();
             linearLayout = view.findViewById(R.id.missingText);
             textView.setVisibility(View.VISIBLE);
             linearLayout.setVisibility(View.GONE);
-
         }
         else {
             linearLayout = view.findViewById(R.id.missingText);

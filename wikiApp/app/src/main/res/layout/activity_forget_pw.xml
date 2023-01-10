@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ForgetPwActivity"
+    android:background="@color/colorPrimary"
+    >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/toolbar"
+            >
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/back_btn"
+                android:padding="14dp"
+                android:id = "@+id/back_btn_settings"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="Forgot your password?"
+                android:textColor="@color/textColor"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+        </RelativeLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/toolbar"
+            android:layout_marginTop="24dp"
+            android:paddingLeft="24dp"
+            android:paddingRight="24dp"
+            android:id="@+id/emailBox"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:padding="12dp"
+                android:gravity="center"
+                >
+
+                <EditText
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:textColorHint="#C8C8C8"
+                    android:textSize="14dp"
+                    android:padding ="12dp"
+                    android:background="@color/newEditText"
+                    android:hint="Enter your email here"
+                    android:id="@+id/enterEmailET"
+                    android:textColor="@color/textColor" >
+                </EditText>
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/emailBox"
+            android:gravity="center"
+            android:id="@+id/buttonBox"
+            android:orientation="vertical" >
+
+            <Button
+                android:id="@+id/rsButton"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/layoutMain"
+                android:textColor="@color/textColor"
+                android:gravity="center"
+                android:text="SEND A RESET EMAIL"
+                android:layout_gravity="center_horizontal"
+                 />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_below="@id/buttonBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/cdText"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginTop="12dp"
+            android:visibility="gone"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/textColor"
+                android:id="@+id/requestText"
+                android:text="You can send another request in"
+                >
+
+            </TextView>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/textColor"
+                android:id="@+id/cooldown"
+                android:text="00:59"
+                android:layout_marginLeft="4dp"
+                >
+
+            </TextView>
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</LinearLayout>

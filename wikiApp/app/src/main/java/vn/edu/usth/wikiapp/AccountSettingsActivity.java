@@ -49,12 +49,9 @@ public class AccountSettingsActivity extends AppCompatActivity {
                 super.onPageSelected(position);
                 switch (position) {
                     case 0:
-                        mBottomNavigationView.getMenu().findItem(R.id.edit_user).setChecked(true);
-                        break;
-                    case 1:
                         mBottomNavigationView.getMenu().findItem(R.id.change_pw).setChecked(true);
                         break;
-                    case 2:
+                    case 1:
                         mBottomNavigationView.getMenu().findItem(R.id.delete_acc).setChecked(true);
                         break;
                 }
@@ -69,9 +66,6 @@ public class AccountSettingsActivity extends AppCompatActivity {
                         break;
                     case 1:
                         mViewPager.setCurrentItem(1);
-                        break;
-                    case 2:
-                        mViewPager.setCurrentItem(2);
                         break;
                 }
                 return false;

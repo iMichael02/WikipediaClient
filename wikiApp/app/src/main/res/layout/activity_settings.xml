@@ -62,15 +62,15 @@
                 android:textColor="@color/textColor"
                 android:textSize="12dp"/>
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:layout_marginTop="20dp"
-                android:paddingStart="20dp"
-                android:layout_gravity="center"
-                android:paddingEnd="20dp"
-                android:background="@drawable/edit_profile"
-                android:text="Edit Profile"/>
+<!--            <androidx.appcompat.widget.AppCompatButton-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="40dp"-->
+<!--                android:layout_marginTop="20dp"-->
+<!--                android:paddingStart="20dp"-->
+<!--                android:layout_gravity="center"-->
+<!--                android:paddingEnd="20dp"-->
+<!--                android:background="@drawable/edit_profile"-->
+<!--                android:text="Edit Profile"/>-->
             
             <LinearLayout
                 android:background="@drawable/round_back"
