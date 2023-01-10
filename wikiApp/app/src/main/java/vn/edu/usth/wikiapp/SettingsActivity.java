@@ -12,10 +12,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.SwitchCompat;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 public class SettingsActivity extends AppCompatActivity {
     SwitchCompat switchCompat;
     ImageView back;
     RelativeLayout accSettings;
+    private FirebaseAuth mAuth;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +32,22 @@ public class SettingsActivity extends AppCompatActivity {
         switchCompat = findViewById(R.id.nightModeSwitch);
         back = findViewById(R.id.back_btn_settings);
         accSettings = findViewById(R.id.account_settings_button);
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+
+        if(currentUser!= null){
+            accSettings.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(SettingsActivity.this, AccountSettingsActivity.class);
+                    startActivity(intent);
+                }
+            });
+        }
+        else {
+            accSettings.setVisibility(View.GONE);
+        }
+
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -34,13 +55,8 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
-        accSettings.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(SettingsActivity.this, AccountSettingsActivity.class);
-                startActivity(intent);
-            }
-        });
+
+
 
         sharedPreferences = getSharedPreferences( "night", 0);
         Boolean booleanValue = sharedPreferences.getBoolean("night_mode", true);

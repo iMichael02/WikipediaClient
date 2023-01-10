@@ -144,7 +144,18 @@ public class ArticleFragment extends Fragment {
         // initializing our adapter class.
         searchView = view.findViewById(R.id.searchViewHome);
         FirebaseUser user = mAuth.getCurrentUser();
-        getPastSearch();
+        if(user!=null) {
+            linearLayout = view.findViewById(R.id.missingText);
+            textView.setVisibility(View.VISIBLE);
+            linearLayout.setVisibility(View.GONE);
+
+        }
+        else {
+            linearLayout = view.findViewById(R.id.missingText);
+            textView.setVisibility(View.GONE);
+            linearLayout.setVisibility(View.VISIBLE);
+
+        }
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -156,6 +167,7 @@ public class ArticleFragment extends Fragment {
                 if(user!=null) {
                     linearLayout = view.findViewById(R.id.missingText);
                     linearLayout.setVisibility(View.GONE);
+                    getPastSearch();
                     if (newText.length() > 0) {
                         // Search
                         textView.setVisibility(View.GONE);
@@ -183,9 +195,9 @@ public class ArticleFragment extends Fragment {
                     } else {
                         // Do something when there's no input
                         Toast t = Toast.makeText(getContext(), "close", Toast.LENGTH_SHORT);
-                        getPastSearch();
                         linearLayout = view.findViewById(R.id.missingText);
                         linearLayout.setVisibility(View.VISIBLE);
+
                         t.show();
                     }
                 }
