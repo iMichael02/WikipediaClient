@@ -99,6 +99,25 @@ public class activity_signup extends AppCompatActivity {
                             finish();
                             Intent intent = new Intent(activity_signup.this, MainActivity.class);
                             startActivity(intent);
+                            CollectionReference dbCourses = db.collection("userData");
+                            FirebaseUser currentUser = mAuth.getCurrentUser();
+                            String userEmail = currentUser.getEmail();
+                            String userId = FirebaseAuth.getInstance().getUid();
+                            SavedInstance userData = new SavedInstance();
+                            userData.setFavorite(new ArrayList<String>());
+                            userData.setEmail(userEmail);
+                            userData.setUid(userId);
+                            dbCourses.document(userId).set(userData).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    Log.i( "Status updated", "Data added");
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Log.i( "Status updated", "Data not added");
+                                }
+                            });
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w("signUpStatus", "createUserWithEmail:failure", task.getException());
@@ -106,25 +125,6 @@ public class activity_signup extends AppCompatActivity {
                         }
                     }
                 });
-        CollectionReference dbCourses = db.collection("userData");
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        String userEmail = currentUser.getEmail();
-        String userId = FirebaseAuth.getInstance().getUid();
-        SavedInstance user = new SavedInstance();
-        user.setFavorite(new ArrayList<String>());
-        user.setEmail(userEmail);
-        user.setUid(userId);
-        dbCourses.document(userId).set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                Log.i( "Status updated", "Data added");
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Log.i( "Status updated", "Data not added");
-            }
-        });
 
     }
 
