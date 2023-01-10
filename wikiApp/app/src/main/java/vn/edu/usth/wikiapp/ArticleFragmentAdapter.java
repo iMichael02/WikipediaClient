@@ -100,61 +100,61 @@ public class ArticleFragmentAdapter extends RecyclerView.Adapter<ArticleFragment
                 CollectionReference dbCourses = db.collection("userPastSearches");
                 mAuth = FirebaseAuth.getInstance();
                 FirebaseUser currentUser = mAuth.getCurrentUser();
-                DocumentReference docRef = dbCourses.document(currentUser.getUid());
-                docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                        if (task.isSuccessful()) {
-                            DocumentSnapshot document = task.getResult();
-                            if (document.exists()) {
-                                ArrayList<String> pastList = (ArrayList<String>) document.getData().get("past");
+                if(currentUser!= null) {
+                    DocumentReference docRef = dbCourses.document(currentUser.getUid());
+                    docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                            if (task.isSuccessful()) {
+                                DocumentSnapshot document = task.getResult();
+                                if (document.exists()) {
+                                    ArrayList<String> pastList = (ArrayList<String>) document.getData().get("past");
 //                                Log.i("asdfasd", (String) holder.searchView.getQuery());
-                                pastList.add(key);
-                                PastSearchInstance userData = new PastSearchInstance();
-                                userData.setUid(currentUser.getUid());
-                                userData.setEmail(currentUser.getEmail());
-                                userData.setPast(pastList);
-                                dbCourses.document(currentUser.getUid()).set(userData).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void aVoid) {
-                                        Log.i("upload new past","success");
-                                    }
-                                }).addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        Log.i("upload new past","failed");
-                                    }
-                                });
-                                Log.d(TAG, "DocumentSnapshot data: " + document.getData());
-                            }
-                            else {
+                                    pastList.add(key);
+                                    PastSearchInstance userData = new PastSearchInstance();
+                                    userData.setUid(currentUser.getUid());
+                                    userData.setEmail(currentUser.getEmail());
+                                    userData.setPast(pastList);
+                                    dbCourses.document(currentUser.getUid()).set(userData).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            Log.i("upload new past","success");
+                                        }
+                                    }).addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Log.i("upload new past","failed");
+                                        }
+                                    });
+                                    Log.d(TAG, "DocumentSnapshot data: " + document.getData());
+                                }
+                                else {
 //                                Log.i("asdfasd", (String) holder.searchView.getQuery());
-                                ArrayList<String> pastList = new ArrayList<String>();
-                                pastList.add(key);
-                                PastSearchInstance userData = new PastSearchInstance();
-                                userData.setUid(currentUser.getUid());
-                                userData.setEmail(currentUser.getEmail());
-                                userData.setPast(pastList);
-                                dbCourses.document(currentUser.getUid()).set(userData).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void aVoid) {
-                                        Log.i("upload new past","success");
-                                    }
-                                }).addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        Log.i("upload new past","failed");
-                                    }
-                                });
+                                    ArrayList<String> pastList = new ArrayList<String>();
+                                    pastList.add(key);
+                                    PastSearchInstance userData = new PastSearchInstance();
+                                    userData.setUid(currentUser.getUid());
+                                    userData.setEmail(currentUser.getEmail());
+                                    userData.setPast(pastList);
+                                    dbCourses.document(currentUser.getUid()).set(userData).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            Log.i("upload new past","success");
+                                        }
+                                    }).addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Log.i("upload new past","failed");
+                                        }
+                                    });
+                                }
+                            } else {
+                                Log.d(TAG, "get failed with ", task.getException());
                             }
-                        } else {
-                            Log.d(TAG, "get failed with ", task.getException());
                         }
-                    }
-                });
+                    });
 
-
-
+                }
             }
         });
 
