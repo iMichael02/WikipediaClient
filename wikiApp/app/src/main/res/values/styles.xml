@@ -21,8 +21,8 @@
     </style>
     <style name="Widget.App.AboutPage" parent="about_About">
         <item name="aboutBackground">@color/colorPrimary</item>
-        <item name="aboutElementIconTint">#333333</item>
-        <item name="aboutSeparatorColor">#999999</item>
+        <item name="aboutElementIconTint">#747474</item>
+        <item name="aboutSeparatorColor">#BCBCBC</item>
         <item name="aboutDescriptionTextAppearance">@style/TextAppearance.App.AboutPage.Description</item>
 
         <!-- similarly, you can also apply the following text appearances -->
@@ -31,6 +31,25 @@
     </style>
 
     <style name="TextAppearance.App.AboutPage.Description" parent="about_descriptionTextAppearance.Dark">
-        <item name="android:textStyle">bold|italic</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/textColor</item>
     </style>
+
+
+    <style name="about_elementTextAppearance" parent="@android:style/TextAppearance">
+        <item name="android:textColor">@color/textColor</item>
+        <item name="android:textSize">@dimen/about_item_text_size</item>
+    </style>
+    <style name="about_elementTextAppearance.Dark">
+        <item name="android:textColor">@color/textColor</item>
+    </style>
+    <style name="about_groupTextAppearance" parent="@android:style/TextAppearance">
+        <item name="android:textColor">@color/textColor</item>
+        <item name="android:textSize">@dimen/about_group_item_text_size</item>
+    </style>
+    <style name="about_groupTextAppearance.Dark" parent="@android:style/TextAppearance">
+        <item name="android:textColor">@color/textColor</item>
+    </style>
+
 </resources>
