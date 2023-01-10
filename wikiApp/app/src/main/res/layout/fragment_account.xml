@@ -53,7 +53,7 @@
             android:layout_marginTop="20dp"
             android:gravity="center_horizontal"
             android:text="SIGN IN"
-            android:textSize="32dp"
+            android:textSize="24dp"
             android:textStyle="bold"
             android:textColor="@color/textColor"
             app:layout_constraintEnd_toEndOf="parent"
@@ -62,7 +62,7 @@
         <EditText
             android:id="@+id/username"
             android:layout_width="300dp"
-            android:layout_height="60dp"
+            android:layout_height="50dp"
             android:layout_marginTop="30dp"
             android:layout_gravity="center"
             android:padding="10dp"
@@ -70,7 +70,7 @@
             android:drawableLeft="@drawable/ic_baseline_person_outline_24"
             android:drawablePadding="4dp"
             android:gravity="center_vertical"
-            android:hint="Username"
+            android:hint="Email"
             android:textColorHint="#C8C8C8"
             android:paddingLeft="16dp"
             android:textColor="@color/textColor"
@@ -80,10 +80,9 @@
         <EditText
             android:id="@+id/password"
             android:layout_width="300dp"
-            android:layout_height="60dp"
+            android:layout_height="50dp"
             android:padding="10dp"
             android:layout_gravity="center"
-
             android:layout_marginTop="30dp"
             android:background="@color/newEditText"
             android:drawableLeft="@drawable/ic_baseline_password_24"
@@ -101,11 +100,20 @@
             app:layout_constraintTop_toBottomOf="@+id/inputusername"
             tools:ignore="TouchTargetSizeCheck" />
 
+        <TextView
+            android:id="@+id/noPw"
+            android:layout_height="wrap_content"
+            android:textColor="@color/textColor"
+            android:layout_gravity="center"
+            android:layout_width="300dp"
+            android:text="Forgot your password? Click here"
+            android:textSize="12dp"
+            android:padding="12dp"
+            />
         <Button
             android:id="@+id/signin_button"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
             android:padding="12dp"
             android:backgroundTint="@color/layoutMain"
             android:textColor="@color/textColor"
@@ -114,6 +122,7 @@
             android:layout_gravity="center"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
+
 
         <TextView
             android:id="@+id/noaccount"
@@ -124,7 +133,7 @@
             android:text="Don't have an account yet?"
             android:textSize="16dp"
             android:layout_marginTop="24dp"
- />
+        />
 
         <Button
             android:id="@+id/signup_button"

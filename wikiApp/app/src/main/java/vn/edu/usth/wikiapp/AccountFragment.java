@@ -30,6 +30,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -243,8 +245,27 @@ public class AccountFragment extends Fragment {
                                 }
                             }
                         }, 1000);
-
-
+                    }
+                    else {
+                        CollectionReference dbCourses = db.collection("userData");
+                        FirebaseUser user = mAuth.getCurrentUser();
+                        String userEmail = user.getEmail();
+                        String userId = FirebaseAuth.getInstance().getUid();
+                        SavedInstance userData = new SavedInstance();
+                        userData.setFavorite(new ArrayList<String>());
+                        userData.setEmail(userEmail);
+                        userData.setUid(userId);
+                        dbCourses.document(userId).set(userData).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Log.i( "Status updated", "Data added");
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.i( "Status updated", "Data not added");
+                            }
+                        });
                     }
                 }
             }

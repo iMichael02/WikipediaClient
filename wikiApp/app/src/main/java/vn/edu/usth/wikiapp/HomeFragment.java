@@ -169,8 +169,14 @@ public class HomeFragment extends Fragment {
                     JSONObject jsonObject = new JSONObject(response);
                     JSONObject tfa = jsonObject.getJSONObject("tfa");
                     title = tfa.getString("title").replaceAll("_"," ");
-                    JSONObject thumbnail = tfa.getJSONObject("thumbnail");
-                    String source = thumbnail.getString("source");
+                    String source;
+                    if(tfa.has("thumbnail")) {
+                        JSONObject thumbnail = tfa.getJSONObject("thumbnail");
+                        source = thumbnail.getString("source");
+                    }
+                    else {
+                        source = "https://phutungnhapkhauchinhhang.com/wp-content/uploads/2020/06/default-thumbnail.jpg";
+                    }
                     JSONObject contentObject = tfa.getJSONObject("content_urls");
                     String extract = tfa.getString("extract");
                     new ImageLoadTask(source, todaysPhoto).execute();
@@ -217,9 +223,7 @@ public class HomeFragment extends Fragment {
                             newsList.add(new NewsResult(newsTitle,newsDesc,String.valueOf(i)+String.valueOf(r),newsThumbnail));
                         }
                     }
-                    for(int i = 0; i < newsList.size(); i++) {
-                        Log.i("newsList", String.valueOf(newsList.get(i).getTitle()));
-                    }
+
                     NewsResultAdapter newsAdapter = new NewsResultAdapter(getContext(),newsList);
                     nRecyclerView.setAdapter(newsAdapter);
                     nRecyclerView.setNestedScrollingEnabled(false);

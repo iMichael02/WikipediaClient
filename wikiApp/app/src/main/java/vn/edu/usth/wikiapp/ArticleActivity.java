@@ -148,12 +148,10 @@ public class ArticleActivity extends AppCompatActivity {
                                                     dbCourses.document(userId).set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                                                         @Override
                                                         public void onSuccess(Void aVoid) {
-                                                            Toast.makeText(ArticleActivity.this, "data removed from fav", Toast.LENGTH_SHORT).show();
                                                         }
                                                     }).addOnFailureListener(new OnFailureListener() {
                                                         @Override
                                                         public void onFailure(@NonNull Exception e) {
-                                                            Toast.makeText(ArticleActivity.this, "Fail to add data " + e, Toast.LENGTH_SHORT).show();
 
                                                         }
                                                     });
@@ -202,7 +200,6 @@ public class ArticleActivity extends AppCompatActivity {
                                                     dbCourses.document(userId).set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                                                         @Override
                                                         public void onSuccess(Void aVoid) {
-                                                            Toast.makeText(ArticleActivity.this, "data removed from fav", Toast.LENGTH_SHORT).show();
                                                         }
                                                     }).addOnFailureListener(new OnFailureListener() {
                                                         @Override
@@ -238,7 +235,27 @@ public class ArticleActivity extends AppCompatActivity {
                                             }
                                         });
                                     }
-                                } else {
+                                }
+                                else {
+                                    CollectionReference dbCourses = db.collection("userData");
+                                    FirebaseUser user = mAuth.getCurrentUser();
+                                    String userEmail = user.getEmail();
+                                    String userId = FirebaseAuth.getInstance().getUid();
+                                    SavedInstance userData = new SavedInstance();
+                                    userData.setFavorite(new ArrayList<String>());
+                                    userData.setEmail(userEmail);
+                                    userData.setUid(userId);
+                                    dbCourses.document(userId).set(userData).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            Log.i( "Status updated", "Data added");
+                                        }
+                                    }).addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Log.i( "Status updated", "Data not added");
+                                        }
+                                    });
                                     Log.d("statusUpate", "No such user data exists");
                                 }
                             } else {
