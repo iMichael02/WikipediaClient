@@ -30,7 +30,10 @@ public class ImageLoadTask extends AsyncTask<Void, Void, Bitmap> {
             connection.connect();
             InputStream input = connection.getInputStream();
             Bitmap myBitmap = BitmapFactory.decodeStream(input);
-            return myBitmap;
+            int nh = (int) (myBitmap.getHeight() * (512.0 / myBitmap.getWidth()));
+            Bitmap scaled = Bitmap.createScaledBitmap(myBitmap, 512, nh, true);
+
+            return scaled;
         } catch (Exception e) {
             e.printStackTrace();
         }

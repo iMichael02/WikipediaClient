@@ -2,9 +2,12 @@ package vn.edu.usth.wikiapp;
 
 import android.widget.ImageView;
 
+import java.util.ArrayList;
+
 public class Versions {
 
     private String codeName, description;
+    private ArrayList<VersionImage> galleryArr;
     private boolean expandable;
 
     public boolean isExpandable() {
@@ -16,10 +19,19 @@ public class Versions {
     }
 
 
-    public Versions(String codeName, String description) {
+    public ArrayList<VersionImage> getGalleryArr() {
+        return galleryArr;
+    }
+
+    public void setGalleryArr(ArrayList<VersionImage> galleryArr) {
+        this.galleryArr = galleryArr;
+    }
+
+    public Versions(String codeName, String description, ArrayList<VersionImage> galleryArr) {
         this.codeName = codeName;
         this.description = description;
-        this.expandable=false;
+        this.expandable= false;
+        this.galleryArr = galleryArr;
     }
 
 

@@ -1,5 +1,7 @@
 package vn.edu.usth.wikiapp;
 
+import static android.content.ContentValues.TAG;
+
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -14,7 +16,19 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -27,10 +41,15 @@ public class ArticleFragmentAdapter extends RecyclerView.Adapter<ArticleFragment
     private Context context;
     private ArrayList<SearchResult> PastSearchResultArrayList;
     private ArrayList<SearchResult> SearchResultArrayList;
+    private FirebaseAuth mAuth;
+    private FirebaseFirestore db;
+    private String key;
 
 
-    public ArticleFragmentAdapter(Context context, ArrayList<SearchResult> SearchResultArrayList) {
+
+    public ArticleFragmentAdapter(Context context, ArrayList<SearchResult> SearchResultArrayList, String key) {
         this.context = context;
+        this.key = key;
         this.SearchResultArrayList = SearchResultArrayList;
     }
 
@@ -76,6 +95,65 @@ public class ArticleFragmentAdapter extends RecyclerView.Adapter<ArticleFragment
                 Intent intent = new Intent(context, ArticleActivity.class);
                 intent.putExtra("message_key", id);
                 context.startActivity(intent);
+
+                db = FirebaseFirestore.getInstance();
+                CollectionReference dbCourses = db.collection("userPastSearches");
+                mAuth = FirebaseAuth.getInstance();
+                FirebaseUser currentUser = mAuth.getCurrentUser();
+                DocumentReference docRef = dbCourses.document(currentUser.getUid());
+                docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            DocumentSnapshot document = task.getResult();
+                            if (document.exists()) {
+                                ArrayList<String> pastList = (ArrayList<String>) document.getData().get("past");
+//                                Log.i("asdfasd", (String) holder.searchView.getQuery());
+                                pastList.add(key);
+                                PastSearchInstance userData = new PastSearchInstance();
+                                userData.setUid(currentUser.getUid());
+                                userData.setEmail(currentUser.getEmail());
+                                userData.setPast(pastList);
+                                dbCourses.document(currentUser.getUid()).set(userData).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        Log.i("upload new past","success");
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Log.i("upload new past","failed");
+                                    }
+                                });
+                                Log.d(TAG, "DocumentSnapshot data: " + document.getData());
+                            }
+                            else {
+//                                Log.i("asdfasd", (String) holder.searchView.getQuery());
+                                ArrayList<String> pastList = new ArrayList<String>();
+                                pastList.add(key);
+                                PastSearchInstance userData = new PastSearchInstance();
+                                userData.setUid(currentUser.getUid());
+                                userData.setEmail(currentUser.getEmail());
+                                userData.setPast(pastList);
+                                dbCourses.document(currentUser.getUid()).set(userData).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        Log.i("upload new past","success");
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Log.i("upload new past","failed");
+                                    }
+                                });
+                            }
+                        } else {
+                            Log.d(TAG, "get failed with ", task.getException());
+                        }
+                    }
+                });
+
+
 
             }
         });

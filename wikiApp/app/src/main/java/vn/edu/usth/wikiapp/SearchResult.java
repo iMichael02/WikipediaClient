@@ -10,6 +10,7 @@ public class SearchResult implements Parcelable {
     private String subDesc;
     private String imageSrc;
 
+
     public SearchResult(String title, String subDesc, String id, String imageSrc) {
         this.title = title;
         this.subDesc = subDesc;

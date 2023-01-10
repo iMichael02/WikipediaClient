@@ -34,10 +34,7 @@ public class OnThisDayAdapter extends RecyclerView.Adapter<OnThisDayAdapter.Recy
             desc = itemView.findViewById(R.id.OnThisDayDesc);
             yearAgo = itemView.findViewById(R.id.onThisDayYearAgo);
         }
-
     }
-
-
     @NonNull
     @Override
 

@@ -141,8 +141,14 @@ public class HomeFragment extends Fragment {
         if(month<10) {
             monthText = "0"+String.valueOf(month);
         }
+        else {
+            monthText = String.valueOf(month);
+        }
         if(day<10) {
             dayText = "0"+String.valueOf(day);
+        }
+        else {
+            dayText = String.valueOf(day);
         }
 
         TextView todaysTitle = getView().findViewById(R.id.todaysTitle);

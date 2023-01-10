@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
@@ -51,6 +52,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.jsoup.Jsoup;
@@ -84,7 +86,7 @@ public class ArticleActivity extends AppCompatActivity {
     private JsonObjectRequest mJsonObjectRequest;
     String otherUrl = "https://en.wikipedia.org/w/api.php?action=query&prop=revisions&rvprop=content&titles=pizza&format=json";
     DisplayMetrics displayMetrics = new DisplayMetrics();
-
+    LinearLayoutManager layoutManager;
 
 
 
@@ -99,11 +101,12 @@ public class ArticleActivity extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
 
 
+
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
         Intent intent = getIntent();
         String str = intent.getStringExtra("message_key");
-        String url = "https://en.wikipedia.org/w/api.php?action=query&prop=extracts|pageimages|pageterms&explaintext&format=json&format=json&pithumbsize="+String.valueOf(getScreenWidth())+"&titles="+str;
+        String url = "https://en.wikipedia.org/w/api.php?action=query&prop=extracts|images|pageimages|pageterms&explaintext&format=json&format=json&pithumbsize="+String.valueOf(getScreenWidth())+"&titles="+str;
         initData(url);
 
         if(currentUser!= null) {
@@ -138,6 +141,7 @@ public class ArticleActivity extends AppCompatActivity {
                                                     String str = intent.getStringExtra("message_key");
                                                     favList.add(str);
                                                     SavedInstance user = new SavedInstance();
+
                                                     user.setFavorite(favList);
                                                     user.setEmail(userEmail);
                                                     user.setUid(userId);
@@ -244,8 +248,6 @@ public class ArticleActivity extends AppCompatActivity {
                     });
 
 
-
-
         }
 
 
@@ -346,36 +348,6 @@ public class ArticleActivity extends AppCompatActivity {
 
 
 
-//        ArrayList<String> arr = new ArrayList<String>();
-//        SavedInstance user = new SavedInstance();
-//        user.setFavorite(new ArrayList<String>());
-//        user.setEmail(userEmail);
-//        user.setUid(userId);
-//        dbCourses.document(userId).set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
-//            @Override
-//            public void onSuccess(Void aVoid) {
-//                Toast.makeText(ArticleActivity.this, "data added", Toast.LENGTH_SHORT).show();
-//            }
-//        }).addOnFailureListener(new OnFailureListener() {
-//            @Override
-//            public void onFailure(@NonNull Exception e) {
-//                Toast.makeText(ArticleActivity.this, "Fail to add data " + e, Toast.LENGTH_SHORT).show();
-//
-//            }
-//        });
-//        mDatabase.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                mDatabase.setValue(user);
-//                Toast.makeText(ArticleActivity.this, "data added", Toast.LENGTH_SHORT).show();
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//                Toast.makeText(ArticleActivity.this, "Fail to add data " + error, Toast.LENGTH_SHORT).show();
-//
-//            }
-//        });
     }
 
     public void openMain() {
@@ -402,9 +374,7 @@ public class ArticleActivity extends AppCompatActivity {
 
     private void initData(String url) {
         versionsList = new ArrayList<Versions>();
-
         mRequestQueue = Volley.newRequestQueue(this);
-
         mStringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -419,14 +389,16 @@ public class ArticleActivity extends AppCompatActivity {
                     String desc = terms.getString("description");
                     String Text = extractedObject.getString("extract");
                     String thumbnail;
-                    if(extractedObject.has("thumbnail")) {
+                    JSONArray imageObj = new JSONArray();
+                    if (extractedObject.has("thumbnail")) {
                         JSONObject thumbnailObj = extractedObject.getJSONObject("thumbnail");
+                        imageObj = extractedObject.getJSONArray("images");
                         thumbnail = thumbnailObj.getString("source");
-                    }
-                    else {
+
+                    } else {
                         thumbnail = "https://phutungnhapkhauchinhhang.com/wp-content/uploads/2020/06/default-thumbnail.jpg";
                     }
-                    Log.i("thumbnail",thumbnail);
+                    Log.i("thumbnail", thumbnail);
                     ImageView mainPhoto = findViewById(R.id.mainPhoto);
                     new ImageLoadTask(thumbnail, mainPhoto).execute();
 
@@ -434,37 +406,54 @@ public class ArticleActivity extends AppCompatActivity {
                     TextView descView = findViewById(R.id.articleDesc);
 
                     titleView.setText(title);
-                    String myString = desc.replaceAll("\"","").replaceAll("\\[","").replaceAll("\\]","");
+                    String myString = desc.replaceAll("\"", "").replaceAll("\\[", "").replaceAll("\\]", "");
                     descView.setText(toTitleCase(myString));
 
-                    String[] TextArray = Text.replaceAll("\n","~").replaceAll("\t","~").split("(?=((?<!=)[=]{2}\\s*[a-zA-Z0-9\\s]*\\s[=]{2}))");
+                    String[] TextArray = Text.replaceAll("\n", "~").replaceAll("\t", "~").split("(?=((?<!=)[=]{2}\\s*[a-zA-Z0-9\\s]*\\s[=]{2}))");
 
                     List<String> list = new ArrayList<String>(Arrays.asList(TextArray));
-                    for(int i = TextArray.length -1 ; i >0;  i--) {
-                        if(list.get(i).replaceAll("\n","").replaceAll("\\s+", "").replaceAll("=","").length() < 30) {
-                            list.remove(i);
+                    for (int i = TextArray.length - 1; i > 0; i--) {
+                        if (list.get(i).replaceAll("\n", "").replaceAll("\\s+", "").replaceAll("=", "").replaceAll("~","").length() < 50) {
+                                list.remove(i);
                         }
                     }
 
+                    ArrayList<VersionImage> galleryArr = new ArrayList<>();
+                    for (int i = 0; i < imageObj.length(); i++) {
+                        String imageUrlFormat = "https://commons.wikimedia.org/wiki/Special:FilePath/";
+                        //File:Adams Morgan Jumbo Slice.jpg
+                        String filePath = imageObj.getJSONObject(i).getString("title").replace("File:","");
+                        String imageUrl = (imageUrlFormat+ filePath).replaceAll(" ","_");
+//                        galleryArr.add(new VersionImage(imageUrl,filePath.replace(".jpg","")));
+                        if(imageObj.getJSONObject(i).getString("title").contains(".jpg")) {
+                            galleryArr.add(new VersionImage(imageUrl,filePath.replace(".jpg","")));
+                        }
+                    }
                     ArrayList<String[]> contentArr = new ArrayList<>();
-                    for(int i = 0; i < list.size(); i++) {
-                        if(i == 0 ) {
-                            contentArr.add(new String[]{"Description", String.valueOf(list.get(i)).replaceAll("~","")});
-                        }
-                        else {
+                    for (int i = 0; i < list.size(); i++) {
+                        if (i == 0) {
+                            contentArr.add(new String[]{"Description", String.valueOf(list.get(i)).replaceAll("~", "")});
+                        } else {
                             String[] temp = list.get(i).split("(?<=([=]{2}\\s[a-zA-Z0-9\\s]{0,200}\\s[=]{2}))");
-                            contentArr.add(new String[] {temp[0].replaceAll("== ","").replaceAll(" ==",""), temp[1].replaceAll("~","")});
+                            String[] temp1 = list.get(i).split("([=]{2}\\s[a-zA-Z0-9\\s]*\\s[=]{2}[~]{1,3})");
+
+                            contentArr.add(new String[]{temp[0].replaceAll("== ", "").replaceAll(" ==", ""), (temp1[1].replaceAll("~", "")).replaceAll("[=]{2,5}\\s[a-zA-Z\\s-()0-9]*\\s[=]{2,5}","\n\n")});
                         }
 
                     }
+                    contentArr.add(new String[]{"Gallery",""});
 
-                    for(int i = 0; i < contentArr.size(); i++) {
-                        versionsList.add(new Versions(contentArr.get(i)[0],contentArr.get(i)[1]));
 
+                    for (int i = 0; i < contentArr.size(); i++) {
+                        versionsList.add(new Versions(contentArr.get(i)[0], (contentArr.get(i)[1]), galleryArr));
                     }
 
-                    VersionsAdapter versionsAdapter = new VersionsAdapter(getApplicationContext(),versionsList);
+                    VersionsAdapter versionsAdapter = new VersionsAdapter(getApplicationContext(), versionsList);
+                    layoutManager
+                            = new LinearLayoutManager(
+                            ArticleActivity.this);
                     recyclerView.setAdapter(versionsAdapter);
+                    recyclerView.setLayoutManager(layoutManager);
                     versionsAdapter.notifyDataSetChanged();
 
                 } catch (JSONException e) {

@@ -60,7 +60,7 @@ public class AccountFragment extends Fragment {
     private RecyclerView recyclerView;
     private FirebaseFirestore db;
     private ArrayList<SearchResult> SearchResultArrayList;
-    private ArticleFragmentAdapter adapter;
+    private ArticleFragmentSavedAdapter adapter;
 
 
 
@@ -93,6 +93,8 @@ public class AccountFragment extends Fragment {
         if(currentUser != null){
             Log.i("Status","Logged in successfully");
         }
+        Log.i("asdfasd","asdfffffffffffgg");
+
     }
 
     @Override
@@ -103,8 +105,8 @@ public class AccountFragment extends Fragment {
             View view = inflater.inflate(R.layout.fragment_account_loggedin, container, false);
             String email = currentUser.getEmail();
             TextView emailText;
-            emailText = view.findViewById(R.id.emailText);
-            emailText.setText(email);
+//            emailText = view.findViewById(R.id.emailText);
+//            emailText.setText(email);
             SearchView searchView = view.findViewById(R.id.searchViewSaved);
             recyclerView = view.findViewById(R.id.savedPostsRV);
             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -175,10 +177,10 @@ public class AccountFragment extends Fragment {
                     if(document.exists()) {
                         ArrayList<String> favList = (ArrayList<String>) document.getData().get("favorite");
                         SearchResultArrayList = new ArrayList<SearchResult>();
+                        mRequestQueue = Volley.newRequestQueue(getContext());
 
                         for(int i = 0; i < favList.size(); i++ ) {
                             String shortUrl = "https://en.wikipedia.org/w/api.php?action=query&formatversion=2&generator=prefixsearch&gpssearch="+favList.get(i)+"&gpslimit=10&prop=pageimages%7Cpageterms&piprop=thumbnail&pithumbsize=50&pilimit=10&redirects=&wbptterms=description&format=json";
-                            mRequestQueue = Volley.newRequestQueue(getContext());
                             mStringRequest = new StringRequest(Request.Method.GET, shortUrl, new Response.Listener<String>() {
                                 @Override
                                 public void onResponse(String response) {
@@ -201,23 +203,6 @@ public class AccountFragment extends Fragment {
                                         String fullDesc = desc.getString(0);
                                         SearchResultArrayList.add(new SearchResult(title,fullDesc,"id",imageUrl));
 
-//                                        for (SearchResult item : SearchResultArrayList) {
-//                                            // checking if the entered string matched with any item of our recycler view.
-//                                            filteredlist.add(item);
-//                                        }
-//                                        if (filteredlist.isEmpty()) {
-//                                            // if no item is added in filtered list we are
-//                                            // displaying a toast message as no data found.
-//                                            Toast.makeText(getContext(), "No Data Found..", Toast.LENGTH_SHORT).show();
-//                                        }
-//                                        else {
-//                                            // at last we are passing that filtered
-//                                            // list to our adapter class.
-//                                            adapter.filterList(filteredlist);
-//                                        }
-                                        // adding layout manager to our recycler view.
-                                        // setting adapter to
-                                        // our recycler view.
 
                                     } catch (JSONException e) {
                                         e.printStackTrace();
@@ -231,13 +216,14 @@ public class AccountFragment extends Fragment {
                             });
                             mRequestQueue.add(mStringRequest);
                         }
+
                         handler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
                                 if(SearchResultArrayList.size()>0) {
                                     Log.i("dataUpdated",SearchResultArrayList.get(0).getTitle());
-                                    adapter = new ArticleFragmentAdapter(getContext(), SearchResultArrayList);
                                     SearchView searchView = getView().findViewById(R.id.searchViewSaved);
+                                    adapter = new ArticleFragmentSavedAdapter(getContext(), SearchResultArrayList);
                                     searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                                         @Override
                                         public boolean onQueryTextSubmit(String query) {

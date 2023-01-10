@@ -33,6 +33,10 @@ import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -40,6 +44,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -74,6 +82,8 @@ public class ArticleFragment extends Fragment {
     LinearLayout linearLayout;
     TextView textView;
     SearchView searchView;
+    private FirebaseFirestore db;
+
 
 
     // TODO: Rename and change types of parameters
@@ -105,8 +115,6 @@ public class ArticleFragment extends Fragment {
 
     }
 
-
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -117,39 +125,6 @@ public class ArticleFragment extends Fragment {
         mAuth = FirebaseAuth.getInstance();
     }
 
-    private void filter(String text, ArticleFragmentAdapter adapter) {
-        // creating a new array list to filter our data.
-
-        ArrayList<SearchResult> filteredlist = new ArrayList<SearchResult>();
-//
-
-//        // running a for loop to compare elements.
-        for (SearchResult item : SearchResultArrayList) {
-            // checking if the entered string matched with any item of our recycler view.
-            if (item.getTitle().toLowerCase().contains(text.toLowerCase())) {
-                // if the item is matched we are
-                // adding it to our filtered list.
-                filteredlist.add(item);
-
-            }
-        }
-        if (filteredlist.isEmpty()) {
-            // if no item is added in filtered list we are
-            // displaying a toast message as no data found.
-            Toast.makeText(getContext(), "No Data Found..", Toast.LENGTH_SHORT).show();
-        }
-        else {
-
-            // at last we are passing that filtered
-            // list to our adapter class.
-            adapter.filterList(filteredlist);
-//            dataInit();
-//            Toast.makeText(getContext(), "No Data Found..", Toast.LENGTH_SHORT).show();
-//            adapter.filterList(filteredlist);
-
-        }
-
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -157,24 +132,19 @@ public class ArticleFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_article, container, false);
         return view;
-
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-
-
         recyclerView = view.findViewById(R.id.recyclerViewHome);
         textView = view.findViewById(R.id.pastSearch);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        FirebaseUser user = mAuth.getCurrentUser();
 
         // initializing our adapter class.
-
-
         searchView = view.findViewById(R.id.searchViewHome);
+        FirebaseUser user = mAuth.getCurrentUser();
+        getPastSearch();
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -183,12 +153,9 @@ public class ArticleFragment extends Fragment {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                // inside on query text change method we are
-                // calling a method to filter our recycler view.
                 if(user!=null) {
                     linearLayout = view.findViewById(R.id.missingText);
                     linearLayout.setVisibility(View.GONE);
-
                     if (newText.length() > 0) {
                         // Search
                         textView.setVisibility(View.GONE);
@@ -198,7 +165,7 @@ public class ArticleFragment extends Fragment {
                         // Do something when there's no input
                         textView.setVisibility(View.VISIBLE);
                         Toast t = Toast.makeText(getContext(), "close", Toast.LENGTH_SHORT);
-                        recyclerView.setVisibility(View.GONE);
+                        getPastSearch();
                         t.show();
                     }
                 }
@@ -216,14 +183,12 @@ public class ArticleFragment extends Fragment {
                     } else {
                         // Do something when there's no input
                         Toast t = Toast.makeText(getContext(), "close", Toast.LENGTH_SHORT);
-                        recyclerView.setVisibility(View.GONE);
+                        getPastSearch();
                         linearLayout = view.findViewById(R.id.missingText);
                         linearLayout.setVisibility(View.VISIBLE);
                         t.show();
                     }
                 }
-
-
                 return false;
             }
         });
@@ -237,28 +202,32 @@ public class ArticleFragment extends Fragment {
             }
         });
 
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("message");
+    }
 
-        myRef.setValue("Hello, World!");
-        myRef.addValueEventListener(new ValueEventListener() {
-
+    private void getPastSearch() {
+        db = FirebaseFirestore.getInstance();
+        CollectionReference dbCourses = db.collection("userPastSearches");
+        FirebaseUser user = mAuth.getCurrentUser();
+        DocumentReference docRef = dbCourses.document(user.getUid());
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated.
-                String value = dataSnapshot.getValue(String.class);
-                Log.d(TAG, "Value is: " + value);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                Log.w(TAG, "Failed to read value.", error.toException());
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        ArrayList<String> pastList = (ArrayList<String>) document.getData().get("past");
+                        PastSearchAdapter pastAdapter = new PastSearchAdapter(pastList, getContext(), getView().findViewById(R.id.searchViewHome));
+                        recyclerView.setAdapter(pastAdapter);
+                        Log.d(TAG, "DocumentSnapshot data: " + document.getData());
+                    }
+                    else {
+                        Log.d(TAG, "none " );
+                    }
+                } else {
+                    Log.d(TAG, "get failed with ", task.getException());
+                }
             }
         });
-
-
     }
 
     private void dataInitCustom(String text) {
@@ -292,26 +261,19 @@ public class ArticleFragment extends Fragment {
                         SearchResultArrayList.add(new SearchResult(title,fullDesc,String.valueOf(i),imageUrl));
                     }
                     ArrayList<SearchResult> filteredlist = new ArrayList<SearchResult>();
-                    ArticleFragmentAdapter adapter = new ArticleFragmentAdapter(getContext(), SearchResultArrayList);
+                    String key = searchView.getQuery().toString();
+                    ArticleFragmentAdapter adapter = new ArticleFragmentAdapter(getContext(), SearchResultArrayList, key);
                     recyclerView.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
                     for (SearchResult item : SearchResultArrayList) {
-                        // checking if the entered string matched with any item of our recycler view.
                         filteredlist.add(item);
                     }
                     if (filteredlist.isEmpty()) {
-                        // if no item is added in filtered list we are
-                        // displaying a toast message as no data found.
                         Toast.makeText(getContext(), "No Data Found..", Toast.LENGTH_SHORT).show();
                     }
                     else {
-                        // at last we are passing that filtered
-                        // list to our adapter class.
                         adapter.filterList(filteredlist);
                     }
-                    // adding layout manager to our recycler view.
-                    // setting adapter to
-                    // our recycler view.
 
                     adapter.notifyDataSetChanged();
 
@@ -323,7 +285,7 @@ public class ArticleFragment extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.i(TAG, "ERRORERRORERROR :" + error.toString());
+                Log.i(TAG, "ERROR :" + error.toString());
             }
         });
         mRequestQueue.add(mStringRequest);
