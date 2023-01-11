@@ -212,7 +212,27 @@ public class AccountFragment extends Fragment {
                                         JSONArray desc = terms.getJSONArray("description");
                                         String fullDesc = desc.getString(0);
                                         SearchResultArrayList.add(new SearchResult(title,fullDesc,"id",imageUrl));
+                                        if(SearchResultArrayList.size()>0) {
+                                            Log.i("dataUpdated",SearchResultArrayList.get(0).getTitle());
+                                            SearchView searchView = getView().findViewById(R.id.searchViewSaved);
+                                            adapter = new ArticleFragmentSavedAdapter(getContext(), SearchResultArrayList);
+                                            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                                                @Override
+                                                public boolean onQueryTextSubmit(String query) {
+                                                    return false;
+                                                }
 
+                                                @Override
+                                                public boolean onQueryTextChange(String newText) {
+                                                    // inside on query text change method we are
+                                                    // calling a method to filter our recycler view.
+                                                    filter(newText);
+                                                    return false;
+                                                }
+                                            });
+                                            recyclerView.setAdapter(adapter);
+                                            adapter.notifyDataSetChanged();
+                                        }
 
                                     } catch (JSONException e) {
                                         e.printStackTrace();
@@ -227,32 +247,33 @@ public class AccountFragment extends Fragment {
                             mRequestQueue.add(mStringRequest);
                         }
 
-                        handler.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                if(SearchResultArrayList.size()>0) {
-                                    Log.i("dataUpdated",SearchResultArrayList.get(0).getTitle());
-                                    SearchView searchView = getView().findViewById(R.id.searchViewSaved);
-                                    adapter = new ArticleFragmentSavedAdapter(getContext(), SearchResultArrayList);
-                                    searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-                                        @Override
-                                        public boolean onQueryTextSubmit(String query) {
-                                            return false;
-                                        }
 
-                                        @Override
-                                        public boolean onQueryTextChange(String newText) {
-                                            // inside on query text change method we are
-                                            // calling a method to filter our recycler view.
-                                            filter(newText);
-                                            return false;
-                                        }
-                                    });
-                                    recyclerView.setAdapter(adapter);
-                                    adapter.notifyDataSetChanged();
-                                }
-                            }
-                        }, 1000);
+//                        handler.postDelayed(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                if(SearchResultArrayList.size()>0) {
+//                                    Log.i("dataUpdated",SearchResultArrayList.get(0).getTitle());
+//                                    SearchView searchView = getView().findViewById(R.id.searchViewSaved);
+//                                    adapter = new ArticleFragmentSavedAdapter(getContext(), SearchResultArrayList);
+//                                    searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+//                                        @Override
+//                                        public boolean onQueryTextSubmit(String query) {
+//                                            return false;
+//                                        }
+//
+//                                        @Override
+//                                        public boolean onQueryTextChange(String newText) {
+//                                            // inside on query text change method we are
+//                                            // calling a method to filter our recycler view.
+//                                            filter(newText);
+//                                            return false;
+//                                        }
+//                                    });
+//                                    recyclerView.setAdapter(adapter);
+//                                    adapter.notifyDataSetChanged();
+//                                }
+//                            }
+//                        }, 1000);
                     }
                     else {
                         CollectionReference dbCourses = db.collection("userData");
