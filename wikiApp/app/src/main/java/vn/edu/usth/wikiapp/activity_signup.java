@@ -2,11 +2,14 @@ package vn.edu.usth.wikiapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -32,6 +35,7 @@ public class activity_signup extends AppCompatActivity {
     ActionBar actionBar;
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
+    ImageView showhidebtn1, showhidebtn2;
 
 
 
@@ -45,6 +49,22 @@ public class activity_signup extends AppCompatActivity {
         inputusername = findViewById(R.id.inputusername);
         inputpassword = findViewById(R.id.inputpassword);
         inputpassword2 = findViewById(R.id.inputpassword2);
+        showhidebtn1 = findViewById(R.id.show_pass_btn);
+        showhidebtn2 = findViewById(R.id.show_pass_btn2);
+
+        showhidebtn1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ShowHidePass(view, inputpassword, 0);
+            }
+        });
+        showhidebtn2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ShowHidePass(view, inputpassword2, 1);
+            }
+        });
+
         signup_button = findViewById(R.id.signup_button);
         signup_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -144,5 +164,42 @@ public class activity_signup extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void ShowHidePass(View view, EditText password, int number){
+        switch (number) {
+            case 0:
+                if (view.getId() == R.id.show_pass_btn) {
+
+                    if (password.getTransformationMethod().equals(PasswordTransformationMethod.getInstance())) {
+                        ((ImageView) (view)).setImageResource(R.drawable.hide_password);
+
+                        //Show Password
+                        password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                    } else {
+                        ((ImageView) (view)).setImageResource(R.drawable.show_password);
+
+                        //Hide Password
+                        password.setTransformationMethod(PasswordTransformationMethod.getInstance());
+
+                    }
+                }
+            case 1:
+                if (view.getId() == R.id.show_pass_btn2) {
+
+                    if (password.getTransformationMethod().equals(PasswordTransformationMethod.getInstance())) {
+                        ((ImageView) (view)).setImageResource(R.drawable.hide_password);
+
+                        //Show Password
+                        password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                    } else {
+                        ((ImageView) (view)).setImageResource(R.drawable.show_password);
+
+                        //Hide Password
+                        password.setTransformationMethod(PasswordTransformationMethod.getInstance());
+
+                    }
+                }
+        }
     }
 }
