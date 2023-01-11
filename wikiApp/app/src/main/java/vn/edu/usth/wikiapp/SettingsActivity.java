@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
@@ -34,6 +35,16 @@ public class SettingsActivity extends AppCompatActivity {
         accSettings = findViewById(R.id.account_settings_button);
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
+
+        TextView lang = findViewById(R.id.language);
+        lang.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(SettingsActivity.this, ChangeLangActivity.class);
+                startActivity(intent);
+            }
+        });
+
 
         if(currentUser!= null){
             accSettings.setOnClickListener(new View.OnClickListener() {

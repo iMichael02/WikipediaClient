@@ -350,7 +350,7 @@ public class AccountFragment extends Fragment {
         if(view.getId()==R.id.show_pass_btn){
 
             if(password.getTransformationMethod().equals(PasswordTransformationMethod.getInstance())){
-                ((ImageView)(view)).setImageResource(R.drawable.hide_password);
+                ((ImageView)(view)).setImageResource(R.drawable.ic_showpw);
 
                 //Show Password
                 password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());

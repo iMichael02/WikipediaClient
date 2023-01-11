@@ -27,7 +27,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:text="Forgot your password?"
+                android:text="@string/forgetPwText"
                 android:textColor="@color/textColor"
                 android:textSize="18sp"
                 android:textStyle="bold" />
@@ -57,7 +57,7 @@
                     android:textSize="14dp"
                     android:padding ="12dp"
                     android:background="@color/newEditText"
-                    android:hint="Enter your email here"
+                    android:hint="@string/emailedit"
                     android:id="@+id/enterEmailET"
                     android:textColor="@color/textColor" >
                 </EditText>
@@ -78,7 +78,7 @@
                 android:backgroundTint="@color/layoutMain"
                 android:textColor="@color/textColor"
                 android:gravity="center"
-                android:text="SEND A RESET EMAIL"
+                android:text="@string/pwReset"
                 android:layout_gravity="center_horizontal"
                  />
 

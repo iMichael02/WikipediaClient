@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name = "home">Home</string>
+    <string name = "article">Article</string>
+    <string name = "acc">Account</string>
+    <string name = "search">Search here</string>
+    <string name = "articleFrag1">Log in to see your saved posts</string>
+    <string name = "articleFrag2">Or make an account!</string>
+    <string name = "signin">Sign in</string>
+    <string name = "password">Password</string>
+    <string name = "forgetpw">Forgot your password? Click here</string>
+    <string name = "forgetPwText">Forgot your password?</string>
+    <string name = "noAcc">Don\'t have an account yet?</string>
+    <string name = "signUp">Sign up</string>
+    <string name = "createAcc">Create your account</string>
+    <string name = "aboutUs">About us</string>
+    <string name = "settings">Settings</string>
+    <string name = "lightmode">Light mode</string>
+    <string name = "textsize">Text Size</string>
+    <string name = "lang">Languages</string>
+    <string name = "accSettings">Account settings</string>
+    <string name="selected_language">English</string>
+    <string name = "tfa">Today\'s featured article</string>
+    <string name = "mostread">Most read articles</string>
+    <string name = "otd">On this day</string>
+    <string name = "changepw">Change password</string>
+    <string name = "oldpw">Old password</string>
+    <string name = "newPw">New password</string>
+    <string name = "cfNewPw">Confirm new password</string>
+    <string name="emailedit">Enter your email here</string>
+    <string name="pwEdit">Enter your password here</string>
+    <string name="pwNewEdit">Enter your new password here</string>
+
+    <string name = "deleteAcc">Delte your account</string>
+    <string name = "aboutus">About us</string>
+    <string name = "past">Past search</string>
+    <string name = "saved">Saved</string>
+    <string name = "savedText">Your saved posts</string>
+
+    <string name = "pwReset">Send a reset email</string>
+
+
+    <string name = "logout">LOG OUT</string>
+    <string name = "changeLang">Change languages</string>
+    <string name = "changeLangText">Change languages here</string>
+
+</resources>

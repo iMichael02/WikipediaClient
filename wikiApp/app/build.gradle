@@ -53,5 +53,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-database'
     implementation 'com.google.firebase:firebase-analytics'
     implementation 'io.github.medyo:android-about-page:2.0.0'
+    implementation 'com.github.franmontiel:LocaleChanger:1.1'
+    // If you are deploying an Android X based application
+    // If you are deploying an Android AppCompat based application
 
 }

@@ -238,10 +238,13 @@ public class ArticleFragment extends Fragment {
     private void dataInitCustom(String text) {
 
         // below line we are creating a new array list
-        String shortUrl = "https://en.wikipedia.org/w/api.php?action=query&formatversion=2&generator=prefixsearch&gpssearch="+text+"&gpslimit=10&prop=pageimages%7Cpageterms&piprop=thumbnail&pithumbsize=50&pilimit=10&redirects=&wbptterms=description&format=json";
+        String shortUrl = "https://en.wikipedia.org/w/api.php?action=query&formatversion=2&generator=prefixsearch&gpssearch="
+                +text+
+                "&gpslimit=10&prop=pageimages%7Cpageterms&piprop=thumbnail&pithumbsize=50&pilimit=10&redirects=&wbptterms=description&format=json";
         SearchResultArrayList = new ArrayList<SearchResult>();
         mRequestQueue = Volley.newRequestQueue(getContext());
         mStringRequest = new StringRequest(Request.Method.GET, shortUrl, new Response.Listener<String>() {
+            //Methods to retrieve data from API and load to view
             @Override
             public void onResponse(String response) {
                 try {

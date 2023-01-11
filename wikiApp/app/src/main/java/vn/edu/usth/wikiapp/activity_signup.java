@@ -27,6 +27,7 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.regex.Pattern;
 
 public class activity_signup extends AppCompatActivity {
 
@@ -44,6 +45,7 @@ public class activity_signup extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
         actionBar = getSupportActionBar();
+        actionBar.setTitle("ENCYCLOPEDIA");
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         inputusername = findViewById(R.id.inputusername);
@@ -91,9 +93,11 @@ public class activity_signup extends AppCompatActivity {
     private void checkCredentials() {
         String checkusername = inputusername.getText().toString();
         String checkpassword = inputpassword.getText().toString();
-        if (checkusername.isEmpty() || checkusername.length() < 5) {
-            showError(inputusername, "Your username is not valid! Username must have over 5 characters!");
-            Toast.makeText(activity_signup.this, "Create account failed!", Toast.LENGTH_SHORT).show();
+        String regexChecker = "(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])";
+
+        if (checkusername.isEmpty() || checkusername.length() < 5 || !patternMatches(checkusername, regexChecker)) {
+            showError(inputusername, "Your Email is not valid! Input must follow email format, and have over 5 characters!");
+            Toast.makeText(activity_signup.this, "Account failed!", Toast.LENGTH_SHORT).show();
         } else if (checkpassword.isEmpty() || checkpassword.length() < 5) {
             showError(inputpassword, "Your password is not valid! Password must have over 5 characters!");
             Toast.makeText(activity_signup.this, "Create account failed!", Toast.LENGTH_SHORT).show();
@@ -103,6 +107,13 @@ public class activity_signup extends AppCompatActivity {
             Toast.makeText(activity_signup.this, "Create account successfully!", Toast.LENGTH_SHORT).show();
         }
     }
+
+    public static boolean patternMatches(String emailAddress, String regexPattern) {
+        return Pattern.compile(regexPattern)
+                .matcher(emailAddress)
+                .matches();
+    }
+
 
     public void signUp() {
         String checkusername = inputusername.getText().toString();
@@ -172,7 +183,7 @@ public class activity_signup extends AppCompatActivity {
                 if (view.getId() == R.id.show_pass_btn) {
 
                     if (password.getTransformationMethod().equals(PasswordTransformationMethod.getInstance())) {
-                        ((ImageView) (view)).setImageResource(R.drawable.hide_password);
+                        ((ImageView) (view)).setImageResource(R.drawable.ic_showpw);
 
                         //Show Password
                         password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
@@ -188,7 +199,7 @@ public class activity_signup extends AppCompatActivity {
                 if (view.getId() == R.id.show_pass_btn2) {
 
                     if (password.getTransformationMethod().equals(PasswordTransformationMethod.getInstance())) {
-                        ((ImageView) (view)).setImageResource(R.drawable.hide_password);
+                        ((ImageView) (view)).setImageResource(R.drawable.ic_showpw);
 
                         //Show Password
                         password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());

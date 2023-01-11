@@ -21,7 +21,7 @@
         <androidx.appcompat.widget.SearchView
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:tooltipText="Search here"
+            android:tooltipText="@string/search"
             app:theme="@style/SearchViewStyle"
             app:iconifiedByDefault="false"
             android:id="@+id/searchViewHome"
@@ -33,7 +33,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dp"
-            android:text="Past searches"
+            android:text="@string/past"
             android:textColor="@color/textColor"
             android:textSize="20dp"
             android:visibility="visible"
@@ -65,7 +65,7 @@
                 android:id="@+id/logInSearch"
                 android:textSize="20dp"
                 android:textColor="@color/textColor"
-                android:text="Log in to see your past searches."
+                android:text="@string/articleFrag1"
                 >
             </TextView>
             <TextView
@@ -75,7 +75,7 @@
                 android:textSize="20dp"
                 android:id="@+id/signUpSearch"
                 android:textColor="@color/textColor"
-                android:text="Or create your account here!"
+                android:text="@string/articleFrag2"
                 >
             </TextView>
 

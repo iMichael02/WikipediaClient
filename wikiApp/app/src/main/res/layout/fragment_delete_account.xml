@@ -17,7 +17,7 @@
        <TextView
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
-           android:text="Delete your account"
+           android:text="@string/deleteAcc"
            android:textColor="@color/textColor"
            android:textSize="16dp"
            android:textStyle="bold"
@@ -52,9 +52,10 @@
                        android:layout_height="wrap_content"
                        android:textColorHint="#C8C8C8"
                        android:textSize="14dp"
+                       android:inputType="textPassword"
                        android:padding ="12dp"
                        android:background="@color/newEditText"
-                       android:hint="Enter your email here"
+                       android:hint="@string/emailedit"
                        android:id="@+id/delEmailEditText"
                        android:textColor="@color/textColor"
 
@@ -72,7 +73,7 @@
                        android:layout_width="120dp"
                        android:layout_height="wrap_content"
                        android:layout_centerVertical="true"
-                       android:text="Password"
+                       android:text="@string/password"
                        android:textColor="@color/textColor"
                        >
                    </TextView>
@@ -84,7 +85,7 @@
                        android:textSize="14dp"
                        android:padding ="12dp"
                        android:background="@color/newEditText"
-                       android:hint="Enter your password here"
+                       android:hint="@string/pwEdit"
                        android:id="@+id/delPwEditText"
                        android:textColor="@color/textColor"
                        android:inputType="textPassword"

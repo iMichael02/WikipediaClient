@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name = "home">Chính</string>
+    <string name = "article">Thông tin</string>
+    <string name = "acc">Tài khoản</string>
+    <string name = "search">Tra tại đây</string>
+    <string name = "articleFrag1">Đăng nhập để xem bài bạn đã lưu</string>
+    <string name = "articleFrag2">Hoặc đăng ký tài khoản</string>
+    <string name = "signin">Đăng nhập</string>
+    <string name = "password">Mật khẩu</string>
+    <string name = "forgetpw">Quên mật khẩu? Hãy bấm vào đây</string>
+    <string name = "forgetPwText">Quên mật khẩu?</string>
+    <string name = "noAcc">Không có tài khoản?</string>
+    <string name = "signUp">Đăng ký</string>
+    <string name = "createAcc">Tạo tài khoản</string>
+    <string name = "aboutUs">Về chúng tôi</string>
+    <string name = "settings">Cài đặt</string>
+    <string name = "lightmode">Chế độ sáng</string>
+    <string name = "textsize">Cỡ chữ</string>
+    <string name = "lang">Ngôn ngữ</string>
+    <string name = "accSettings">Cài đặt tài khoản</string>
+    <string name="selected_language">Tiếng Việt</string>
+    <string name = "tfa">Tin ngày hôm nay</string>
+    <string name = "mostread">Tin đọc nhiều nhất</string>
+    <string name = "otd">Ngày này những năm trước</string>
+    <string name = "changepw">Đổi mật khẩu</string>
+    <string name = "oldpw">Mật khẩu cũ</string>
+    <string name = "newPw">Mật khẩu mới</string>
+    <string name = "cfNewPw">Xác nhận mật khẩu</string>
+    <string name="pwNewEdit">Điền mật khẩu mới tại đây</string>
+    <string name = "pwReset">Gửi mail reset mật khẩu</string>
+
+
+    <string name="emailedit">Điền email tại đây</string>
+    <string name="pwEdit">Điền mật khẩu tại đây</string>
+    <string name = "deleteAcc">Xóa tài khoản</string>
+    <string name = "aboutus">Về chúng tôi</string>
+    <string name = "past">Lịch sử tìm kiếm</string>
+    <string name = "saved">Bài đã lưu</string>
+    <string name = "logout">Đăng xuất</string>
+    <string name = "changeLang">Đổi ngôn ngữ</string>
+    <string name = "savedText">Bài bạn lưu</string>
+    <string name = "changeLangText">Đổi ngôn ngữ tại đây</string>
+</resources>

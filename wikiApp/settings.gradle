@@ -3,6 +3,7 @@ pluginManagement {
         gradlePluginPortal()
         google()
         mavenCentral()
+        jcenter()
     }
 }
 dependencyResolutionManagement {
@@ -13,5 +14,5 @@ dependencyResolutionManagement {
         maven { url  'https://jitpack.io/' }
     }
 }
-rootProject.name = "wikiApp"
+rootProject.name = "ENCYCLOPEDIA"
 include ':app'

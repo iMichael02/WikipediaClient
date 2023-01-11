@@ -24,12 +24,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:text="Your saved posts"
+                android:padding="16dp"
+                android:text="@string/savedText"
                 android:textColor="@color/textColor"
                 android:textSize="18sp"
-                android:textStyle="bold"
-                android:padding="16dp"
-                />
+                android:textStyle="bold" />
         </RelativeLayout>
 
 <!--        <LinearLayout-->
@@ -67,7 +66,7 @@
         <androidx.appcompat.widget.SearchView
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:tooltipText="Search here"
+            android:tooltipText="@string/search"
             app:theme="@style/SearchViewStyle"
             app:iconifiedByDefault="false"
             android:id="@+id/searchViewSaved"

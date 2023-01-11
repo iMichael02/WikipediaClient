@@ -24,7 +24,7 @@
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
            android:layout_centerInParent="true"
-           android:text="Settings"
+           android:text="@string/settings"
            android:textColor="@color/textColor"
            android:textSize="18sp"
            android:textStyle="bold" />
@@ -50,17 +50,11 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
-                android:text="User"
+                android:text="ntqhai2002@gmail.com"
                 android:textColor="@color/textColor"
                 android:textSize="22dp"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Email"
-                android:layout_gravity="center"
-                android:textColor="@color/textColor"
-                android:textSize="12dp"/>
+
 
 <!--            <androidx.appcompat.widget.AppCompatButton-->
 <!--                android:layout_width="wrap_content"-->
@@ -90,7 +84,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:text="Light Mode"
+                        android:text="@string/lightmode"
                         android:textStyle="bold"
                         android:textColor="@color/textColor"
                         android:textSize="14dp"
@@ -135,7 +129,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:text="Account settings"
+                        android:text="@string/accSettings"
                         android:textStyle="bold"
                         android:textColor = "@color/textColor"
                         android:textSize="14dp"
@@ -165,7 +159,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:text="Text Size"
+                        android:text="@string/textsize"
                         android:textColor="@color/textColor"
                         android:textSize="14dp"
                         android:textStyle="bold" />
@@ -189,7 +183,7 @@
                         android:id="@+id/language"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Language"
+                        android:text="@string/lang"
                         android:textColor="@color/textColor"
                         android:textSize="14dp"
                         android:textStyle="bold"
@@ -209,97 +203,97 @@
 
             </LinearLayout>
 
-            <LinearLayout
-                android:background="@drawable/round_back"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
-                android:layout_marginTop="20dp"
-                android:padding="15dp"
-                android:orientation="vertical">
+<!--            <LinearLayout-->
+<!--                android:background="@drawable/round_back"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginStart="20dp"-->
+<!--                android:layout_marginEnd="20dp"-->
+<!--                android:layout_marginTop="20dp"-->
+<!--                android:padding="15dp"-->
+<!--                android:orientation="vertical">-->
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+<!--                <RelativeLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content">-->
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:text="Send us an email"
-                        android:textColor="@color/textColor"
-                        android:textStyle="bold"
-                        android:textSize="14dp"
-                        android:id="@+id/contact"/>
+<!--                    <TextView-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_centerVertical="true"-->
+<!--                        android:text="Send us an email"-->
+<!--                        android:textColor="@color/textColor"-->
+<!--                        android:textStyle="bold"-->
+<!--                        android:textSize="14dp"-->
+<!--                        android:id="@+id/contact"/>-->
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_baseline_arrow_forward_ios_24"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true">
+<!--                    <ImageView-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:src="@drawable/ic_baseline_arrow_forward_ios_24"-->
+<!--                        android:layout_alignParentEnd="true"-->
+<!--                        android:layout_centerVertical="true">-->
 
-                    </ImageView>
-
-
+<!--                    </ImageView>-->
 
 
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="10dp">
-
-                    <TextView
-                        android:id="@+id/about_us"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:text="About us"
-                        android:textColor="@color/textColor"
-                        android:textSize="14dp"
-                        android:textStyle="bold" />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        android:src="@drawable/ic_baseline_arrow_forward_ios_24">
-
-                    </ImageView>
-
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:id="@+id/faqs"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="FAQs"
-                        android:textSize="14dp"
-                        android:textColor="@color/textColor"
-                        android:textStyle="bold"
-                        android:layout_centerVertical="true"/>
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        android:src="@drawable/ic_baseline_arrow_forward_ios_24">
-
-                    </ImageView>
-
-                </RelativeLayout>
 
 
-            </LinearLayout>
+<!--                </RelativeLayout>-->
+
+<!--                <RelativeLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:paddingTop="10dp">-->
+
+<!--                    <TextView-->
+<!--                        android:id="@+id/about_us"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_centerVertical="true"-->
+<!--                        android:text="About us"-->
+<!--                        android:textColor="@color/textColor"-->
+<!--                        android:textSize="14dp"-->
+<!--                        android:textStyle="bold" />-->
+
+<!--                    <ImageView-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_alignParentEnd="true"-->
+<!--                        android:layout_centerVertical="true"-->
+<!--                        android:src="@drawable/ic_baseline_arrow_forward_ios_24">-->
+
+<!--                    </ImageView>-->
+
+<!--                </RelativeLayout>-->
+
+<!--                <RelativeLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content">-->
+
+<!--                    <TextView-->
+<!--                        android:id="@+id/faqs"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text="FAQs"-->
+<!--                        android:textSize="14dp"-->
+<!--                        android:textColor="@color/textColor"-->
+<!--                        android:textStyle="bold"-->
+<!--                        android:layout_centerVertical="true"/>-->
+
+<!--                    <ImageView-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_alignParentEnd="true"-->
+<!--                        android:layout_centerVertical="true"-->
+<!--                        android:src="@drawable/ic_baseline_arrow_forward_ios_24">-->
+
+<!--                    </ImageView>-->
+
+<!--                </RelativeLayout>-->
+
+
+<!--            </LinearLayout>-->
 
 
         </LinearLayout>
