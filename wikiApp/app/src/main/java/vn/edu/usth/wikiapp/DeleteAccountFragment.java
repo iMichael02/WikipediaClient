@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -39,6 +40,7 @@ public class DeleteAccountFragment extends Fragment {
     private String mParam2;
     Button deleteAccButton;
     EditText delEmail,delPw;
+    ImageView showdihebtn;
 
     public DeleteAccountFragment() {
         // Required empty public constructor

@@ -7,12 +7,15 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -44,6 +47,7 @@ public class ChangePasswordFragment extends Fragment {
     private FirebaseAuth mAuth;
     Button changePwButton;
     EditText oldPw, newPw, cfNewPw;
+    ImageView showhidebtn1, showhidebtn2, showhidebtn3;
 
     public ChangePasswordFragment() {
         // Required empty public constructor
@@ -90,7 +94,9 @@ public class ChangePasswordFragment extends Fragment {
         oldPw = getView().findViewById(R.id.oldPwEditText);
         newPw = getView().findViewById(R.id.newPwEditText);
         cfNewPw = getView().findViewById(R.id.cfNewPwEditText);
-
+        showhidebtn1 = getView().findViewById(R.id.show_pass_btn);
+        showhidebtn2 = getView().findViewById(R.id.show_pass_btn2);
+        showhidebtn3 = getView().findViewById(R.id.show_pass_btn3);
 
         Pattern pattern = Pattern.compile("^.\\S{6,}$");
 
@@ -147,5 +153,76 @@ public class ChangePasswordFragment extends Fragment {
                 }
             }
         });
+        showhidebtn1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ShowHidePass(view, oldPw, 0);
+            }
+        });
+        showhidebtn2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ShowHidePass(view, newPw, 1);
+            }
+        });
+        showhidebtn3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ShowHidePass(view, cfNewPw, 2);
+            }
+        });
+    }
+
+    public void ShowHidePass(View view, EditText password, int number){
+        switch (number) {
+            case 0:
+                if (view.getId() == R.id.show_pass_btn) {
+
+                    if (password.getTransformationMethod().equals(PasswordTransformationMethod.getInstance())) {
+                        ((ImageView) (view)).setImageResource(R.drawable.hide_password);
+
+                        //Show Password
+                        password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                    } else {
+                        ((ImageView) (view)).setImageResource(R.drawable.show_password);
+
+                        //Hide Password
+                        password.setTransformationMethod(PasswordTransformationMethod.getInstance());
+
+                    }
+                }
+            case 1:
+                if (view.getId() == R.id.show_pass_btn2) {
+
+                    if (password.getTransformationMethod().equals(PasswordTransformationMethod.getInstance())) {
+                        ((ImageView) (view)).setImageResource(R.drawable.hide_password);
+
+                        //Show Password
+                        password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                    } else {
+                        ((ImageView) (view)).setImageResource(R.drawable.show_password);
+
+                        //Hide Password
+                        password.setTransformationMethod(PasswordTransformationMethod.getInstance());
+
+                    }
+                }
+            case 2:
+                if (view.getId() == R.id.show_pass_btn3) {
+
+                    if (password.getTransformationMethod().equals(PasswordTransformationMethod.getInstance())) {
+                        ((ImageView) (view)).setImageResource(R.drawable.hide_password);
+
+                        //Show Password
+                        password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                    } else {
+                        ((ImageView) (view)).setImageResource(R.drawable.show_password);
+
+                        //Hide Password
+                        password.setTransformationMethod(PasswordTransformationMethod.getInstance());
+
+                    }
+                }
+        }
     }
 }
