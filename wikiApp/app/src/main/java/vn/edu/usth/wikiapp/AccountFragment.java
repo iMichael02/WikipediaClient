@@ -14,12 +14,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Handler;
 import android.os.Parcelable;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -63,6 +66,7 @@ public class AccountFragment extends Fragment {
     private FirebaseFirestore db;
     private ArrayList<SearchResult> SearchResultArrayList;
     private ArticleFragmentSavedAdapter adapter;
+    private ImageView showhidebtn;
 
 
 
@@ -120,8 +124,16 @@ public class AccountFragment extends Fragment {
             View view = inflater.inflate(R.layout.fragment_account, container, false);
             username = view.findViewById(R.id.username);
             password = view.findViewById(R.id.password);
+            showhidebtn = view.findViewById(R.id.show_pass_btn);
             String usernameValue = username.getText().toString();
             String passwordValue = password.getText().toString();
+
+            showhidebtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ShowHidePass(view, password);
+                }
+            });
             TextView noPw = view.findViewById(R.id.noPw);
             noPw.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -170,8 +182,6 @@ public class AccountFragment extends Fragment {
             return view;
         }
     }
-
-
 
     private void dataInitCustom() {
         db = FirebaseFirestore.getInstance();
@@ -334,5 +344,24 @@ public class AccountFragment extends Fragment {
     public void opensignup() {
         Intent intent = new Intent(getContext(), activity_signup.class);
         startActivity(intent);
+    }
+
+    public void ShowHidePass(View view, EditText password){
+        if(view.getId()==R.id.show_pass_btn){
+
+            if(password.getTransformationMethod().equals(PasswordTransformationMethod.getInstance())){
+                ((ImageView)(view)).setImageResource(R.drawable.hide_password);
+
+                //Show Password
+                password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+            }
+            else{
+                ((ImageView)(view)).setImageResource(R.drawable.show_password);
+
+                //Hide Password
+                password.setTransformationMethod(PasswordTransformationMethod.getInstance());
+
+            }
+        }
     }
 }
