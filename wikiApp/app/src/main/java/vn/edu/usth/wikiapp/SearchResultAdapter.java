@@ -59,7 +59,6 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(view.getContext(), "Recycle Click" + holder.getAdapterPosition(), Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(view.getContext(), ArticleActivity.class);
                 view.getContext().startActivity(intent);
             }

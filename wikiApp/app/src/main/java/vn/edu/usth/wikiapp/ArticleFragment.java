@@ -176,9 +176,7 @@ public class ArticleFragment extends Fragment {
                     } else {
                         // Do something when there's no input
                         textView.setVisibility(View.VISIBLE);
-                        Toast t = Toast.makeText(getContext(), "close", Toast.LENGTH_SHORT);
                         getPastSearch();
-                        t.show();
                     }
                 }
                 else {
@@ -194,11 +192,8 @@ public class ArticleFragment extends Fragment {
                         dataInitCustom(newText);
                     } else {
                         // Do something when there's no input
-                        Toast t = Toast.makeText(getContext(), "close", Toast.LENGTH_SHORT);
                         linearLayout = view.findViewById(R.id.missingText);
                         linearLayout.setVisibility(View.VISIBLE);
-
-                        t.show();
                     }
                 }
                 return false;
@@ -207,9 +202,7 @@ public class ArticleFragment extends Fragment {
         searchView.setOnCloseListener(new SearchView.OnCloseListener() {
             @Override
             public boolean onClose() {
-                Toast t = Toast.makeText(getContext(), "close", Toast.LENGTH_SHORT);
                 recyclerView.setVisibility(View.GONE);
-                t.show();
                 return false;
             }
         });

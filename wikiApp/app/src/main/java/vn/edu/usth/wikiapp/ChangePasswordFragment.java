@@ -143,7 +143,7 @@ public class ChangePasswordFragment extends Fragment {
                 }
                 else {
 
-                    Toast.makeText(getContext(), "Invalid user input123444. Please try again", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Invalid user input. Please try again", Toast.LENGTH_SHORT).show();
                 }
             }
         });

@@ -153,7 +153,6 @@ public class ArticleActivity extends AppCompatActivity {
                                                     dbCourses.document(userId).set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                                                         @Override
                                                         public void onSuccess(Void aVoid) {
-                                                            Toast.makeText(ArticleActivity.this, "data added to fav", Toast.LENGTH_SHORT).show();
                                                         }
                                                     }).addOnFailureListener(new OnFailureListener() {
                                                         @Override
@@ -275,83 +274,14 @@ public class ArticleActivity extends AppCompatActivity {
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
 
-        Toast.makeText(this, "Message Key ID from previous activity" + str, Toast.LENGTH_SHORT).show();
 
         // to make the Navigation drawer icon always appear on the action bar
 //        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
-    public void openSearchActivity() {
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-    }
-
-    public void writeNewUser(String title) {
-        Intent intent = getIntent();
-        String str = intent.getStringExtra("message_key");
-        CollectionReference dbCourses = db.collection("userData");
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        String userEmail = currentUser.getEmail();
-        String userId = FirebaseAuth.getInstance().getUid();
-
-
-        dbCourses.document(userId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    if (document.exists()) {
-                        ArrayList<String> currArr = (ArrayList<String>) document.getData().get("favorite");
-                        currArr.add(str);
-
-                        SavedInstance user = new SavedInstance();
-                        user.setFavorite(currArr);
-                        user.setEmail(userEmail);
-                        user.setUid(userId);
-                        dbCourses.document(userId).set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                                Toast.makeText(ArticleActivity.this, "data added", Toast.LENGTH_SHORT).show();
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Toast.makeText(ArticleActivity.this, "Fail to add data " + e, Toast.LENGTH_SHORT).show();
-
-                            }
-                        });
-
-                    } else {
-                        ArrayList<String> arr = new ArrayList<String>();
-                        arr.add(str);
-                        SavedInstance user = new SavedInstance();
-                        user.setFavorite(arr);
-                        user.setEmail(userEmail);
-                        user.setUid(userId);
-                        dbCourses.document(userId).set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                                Toast.makeText(ArticleActivity.this, "data added", Toast.LENGTH_SHORT).show();
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Toast.makeText(ArticleActivity.this, "Fail to add data " + e, Toast.LENGTH_SHORT).show();
-
-                            }
-                        });
-
-                    }
-                } else {
-                    Log.d(TAG, "get failed with ", task.getException());
-                }
-            }
-        });
 
 
 
-
-    }
 
     public void openMain() {
 //        Intent intent = new Intent(this, MainActivity.class);

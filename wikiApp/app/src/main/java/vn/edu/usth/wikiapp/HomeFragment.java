@@ -187,11 +187,11 @@ public class HomeFragment extends Fragment {
                     JSONObject mostread = jsonObject.getJSONObject("mostread");
                     JSONArray articles = mostread.getJSONArray("articles");
                     JSONArray sortedJsonArray = getSortedMessages(articles);
-                    for(int i = 0 ; i < 10; i ++) {
+                    for(int i = 0 ; i < 9; i ++) {
                         JSONObject article = sortedJsonArray.getJSONObject(i);
                         String mrTitle = article.getJSONObject("titles").getString("normalized");
                         String mrDesc = article.getString("description");
-                        String rank = article.getString("rank");
+                        String rank = String.valueOf((Integer.parseInt(article.getString("rank"))-2));
                         String mrThumbnail;
                         if(article.has("thumbnail")) {
                             mrThumbnail = article.getJSONObject("thumbnail").getString("source");
