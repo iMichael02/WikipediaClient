@@ -7,6 +7,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,7 +42,7 @@ public class DeleteAccountFragment extends Fragment {
     private String mParam2;
     Button deleteAccButton;
     EditText delEmail,delPw;
-    ImageView showdihebtn;
+    ImageView showhidebtn;
 
     public DeleteAccountFragment() {
         // Required empty public constructor
@@ -80,6 +82,15 @@ public class DeleteAccountFragment extends Fragment {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         delEmail = getView().findViewById(R.id.delEmailEditText);
         delPw = getView().findViewById(R.id.delPwEditText);
+        showhidebtn = getView().findViewById(R.id.show_pass_btn);
+
+        showhidebtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ShowHidePass(view, delPw);
+            }
+        });
+
         deleteAccButton = getView().findViewById(R.id.deleteAccButton);
         deleteAccButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -124,5 +135,24 @@ public class DeleteAccountFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_delete_account, container, false);
+    }
+
+    public void ShowHidePass(View view, EditText password){
+        if(view.getId()==R.id.show_pass_btn){
+
+            if(password.getTransformationMethod().equals(PasswordTransformationMethod.getInstance())){
+                ((ImageView)(view)).setImageResource(R.drawable.hide_password);
+
+                //Show Password
+                password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+            }
+            else{
+                ((ImageView)(view)).setImageResource(R.drawable.show_password);
+
+                //Hide Password
+                password.setTransformationMethod(PasswordTransformationMethod.getInstance());
+
+            }
+        }
     }
 }

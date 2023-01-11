@@ -62,14 +62,16 @@
                    </EditText>
 
                </LinearLayout>
-               <LinearLayout
+               <RelativeLayout
                    android:layout_width="match_parent"
                    android:layout_height="wrap_content"
                    android:layout_marginBottom="12dp"
                    >
                    <TextView
+                       android:id="@+id/password"
                        android:layout_width="120dp"
                        android:layout_height="wrap_content"
+                       android:layout_centerVertical="true"
                        android:text="Password"
                        android:textColor="@color/textColor"
                        >
@@ -77,6 +79,7 @@
                    <EditText
                        android:layout_width="fill_parent"
                        android:layout_height="wrap_content"
+                       android:layout_toRightOf="@+id/password"
                        android:textColorHint="#C8C8C8"
                        android:textSize="14dp"
                        android:padding ="12dp"
@@ -84,11 +87,18 @@
                        android:hint="Enter your password here"
                        android:id="@+id/delPwEditText"
                        android:textColor="@color/textColor"
-
+                       android:inputType="textPassword"
                        >
                    </EditText>
-
-               </LinearLayout>
+                   <ImageView
+                       android:id="@+id/show_pass_btn"
+                       android:layout_width="30dp"
+                       android:layout_height="30dp"
+                       android:layout_centerVertical="true"
+                       android:layout_marginRight="5dp"
+                       android:layout_alignRight="@+id/delPwEditText"
+                       android:src="@drawable/show_password" />
+               </RelativeLayout>
 
            </LinearLayout>
 
